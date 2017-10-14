@@ -18,7 +18,7 @@ exports.config = {
   logLevel: 'info',
   coloredLogs: true,
   bail: 0,
-  screenshotPath: './errorShots/',
+  screenshotPath: './.tmp/errorShots/',
   baseUrl: 'http://localhost:' + (process.env.PORT || config.dev.port),
   waitforTimeout: 10000,
   connectionRetryTimeout: 90000,
