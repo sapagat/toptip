@@ -8,11 +8,13 @@
     "dev": "node build/dev-server.js",
     "start": "npm run dev",
     "build": "node build/build.js",
+    "unit": "mocha-webpack --opts test/unit/mocha-webpack.opts",
     "e2e": "node test/e2e/runner.js",
-    "test": "npm run e2e",
+    "test": "npm run unit && npm run e2e",
     "lint": "eslint --ext .js,.vue src test/e2e/specs"
   },
   "dependencies": {
+    "postal": "^2.0.5",
     "vue": "^2.4.2"
   },
   "devDependencies": {
@@ -24,6 +26,7 @@
     "babel-preset-env": "^1.3.2",
     "babel-preset-stage-2": "^6.22.0",
     "babel-register": "^6.22.0",
+    "chai": "^4.1.2",
     "chalk": "^2.0.1",
     "chromedriver": "^2.27.2",
     "connect-history-api-fallback": "^1.3.0",
@@ -46,6 +49,10 @@
     "friendly-errors-webpack-plugin": "^1.6.1",
     "html-webpack-plugin": "^2.30.1",
     "http-proxy-middleware": "^0.17.3",
+    "jsdom": "^11.3.0",
+    "jsdom-global": "^3.0.2",
+    "mocha": "^4.0.1",
+    "mocha-webpack": "^0.7.0",
     "nightwatch": "^0.9.12",
     "opn": "^5.1.0",
     "optimize-css-assets-webpack-plugin": "^3.2.0",

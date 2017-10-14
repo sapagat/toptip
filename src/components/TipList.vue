@@ -6,6 +6,7 @@
 
 <script>
 import TipCard from './TipCard'
+import Bus from '../infrastructure/Bus'
 
 export default {
   name: 'tip-list',
@@ -14,10 +15,28 @@ export default {
 
   data () {
     return {
-      tips: [
-        { id: 1, name: 'Bar Aragon', address: 'Barón de San Petrillo (Beni)', advisor: 'Manel', message: 'You must try the handed ice' },
-        { id: 2, name: 'Plaerdemavida', address: 'Compte d\'Altea', advisor: 'Eduardo Sebastian', message: 'Sassera, vino blanco' }
-      ]
+      tips: []
+    }
+  },
+
+  mounted () {
+    this.subscribe()
+    this.start()
+  },
+
+  methods: {
+    subscribe () {
+      Bus.subscribe('tips', 'list.ready', (data) => {
+        this.saveTips(data)
+      })
+    },
+
+    start () {
+      Bus.publish('tips', 'fetch.list')
+    },
+
+    saveTips (tips) {
+      this.tips = tips
     }
   }
 }
