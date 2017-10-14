@@ -24,14 +24,22 @@ export default {
 
 <style>
 .Header {
-  height: 60px;
-  margin: 10px 0;
-  vertical-align: middle;
+  position: fixed;
+  top: 0;
 
-  text-align: center;
+  width: 100%;
+  height: 60px;
+  margin-bottom: 10px;
+  vertical-align: middle;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background-color: #ffffff;
 }
 
 .Content {
+  margin: 50px 0;
   padding: 0.3em;
 }
 </style>
