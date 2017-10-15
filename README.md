@@ -72,3 +72,10 @@ You can check it here: https://travis-ci.org/sapagat/toptip
 }
 ```
 
+### Breakpoints
+
+- mobile: from 0px
+- tablet: from 769px
+- desktop: from 1024px
+- widescreen: from 1216px
+- fullhd: from 1408px

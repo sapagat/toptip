@@ -17,8 +17,13 @@ class MainPage {
     return new Tip(element)
   }
 
+  createButton() {
+    return $('.Trigger-button')
+  }
+
   validate () {
     assert.equal(this.header(), 'Tips')
+    assert.isTrue(this.createButton().isExisting())
   }
 }
 
