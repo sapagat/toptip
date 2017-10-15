@@ -6,21 +6,21 @@
 
     <div class="Content">
       <tip-list></tip-list>
-      <div class="Trigger-container">
-        <div class="button is-primary Trigger-button">+</div>
-      </div>
+      <add-button></add-button>
     </div>
   </div>
 </template>
 
 <script>
 import TipList from './components/TipList'
+import AddButton from './components/AddButton'
 
 export default {
   name: 'app',
 
   components: {
-    TipList
+    TipList,
+    AddButton
   }
 }
 </script>
@@ -50,26 +50,5 @@ export default {
 .Content {
   margin: 50px 0;
   padding: 0.3em;
-}
-
-.Trigger-container {
-  position: fixed;
-  bottom: 0;
-
-  width: 100%;
-  height: 70px;
-}
-
-.Trigger-button {
-  float: right;
-
-  margin-right: 20px;
-  width: 55px;
-  height: 55px;
-  border-radius: 50%;
-
-  box-shadow: 0px 2px 5px #666;
-
-  font-size: 2em;
 }
 </style>

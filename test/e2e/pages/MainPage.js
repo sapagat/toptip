@@ -17,13 +17,13 @@ class MainPage {
     return new Tip(element)
   }
 
-  createButton() {
-    return $('.Trigger-button')
+  addButton() {
+    return $('#add_tip')
   }
 
   validate () {
     assert.equal(this.header(), 'Tips')
-    assert.isTrue(this.createButton().isExisting())
+    assert.isTrue(this.addButton().isExisting())
   }
 }
 
