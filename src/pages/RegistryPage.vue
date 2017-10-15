@@ -1,37 +1,37 @@
 <template>
   <page-layout>
     <template slot="header">
-      <div class="Title">
-        <h1 class="title">Tips</h1>
-      </div>
+      <button id="cancel_button" class="button is-primary is-inverted Cancel-button" @click="goBack">X</button>
     </template>
 
     <template slot="content">
-      <tip-list></tip-list>
-      <add-button></add-button>
+      <tip-form></tip-form>
     </template>
   </page-layout>
 </template>
 
 <script>
 import PageLayout from '../layout/PageLayout'
-import TipList from '../components/TipList'
-import AddButton from '../components/AddButton'
+import TipForm from '../components/TipForm'
 
 export default {
   name: 'app',
 
   components: {
     PageLayout,
-    TipList,
-    AddButton
+    TipForm
+  },
+
+  methods: {
+    goBack () {
+      this.$router.go(-1)
+    }
   }
 }
 </script>
 
 <style>
-.Title {
-  width: 100%;
-  text-align: center;
+.Cancel-button {
+  font-size: 2em;
 }
 </style>

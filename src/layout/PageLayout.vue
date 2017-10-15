@@ -24,10 +24,8 @@
   width: 100%;
   height: 60px;
   margin-bottom: 10px;
-  vertical-align: middle;
   display: flex;
   align-items: center;
-  justify-content: center;
 
   background-color: #ffffff;
 }
