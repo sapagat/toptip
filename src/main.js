@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import App from './App'
+import MainPage from './pages/MainPage'
 import TipsService from './services/TipsService'
 import Bus from './infrastructure/Bus'
 
@@ -10,6 +10,6 @@ new TipsService(Bus)
 
 new Vue({
   el: '#app',
-  template: '<App/>',
-  components: { App }
+  template: '<MainPage/>',
+  components: { MainPage }
 })
