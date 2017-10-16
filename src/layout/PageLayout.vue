@@ -27,6 +27,11 @@
   display: flex;
   align-items: center;
 
+  box-shadow:
+    0 2px 4px 0 rgba(216,221,223,0.59),
+    0 2px 4px 0 rgba(235,237,238,0.5);
+
+
   background-color: #ffffff;
 }
 
