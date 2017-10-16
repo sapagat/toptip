@@ -5,16 +5,23 @@ const RegistryPage = require('./pages/RegistryPage')
 describe('A TopTip user', () => {
   let page
 
-  it('can see the list of registered tips', () => {
+  it('can keep tips in a list', () => {
     goToMainPage()
 
-    expectTipsToBeListed()
+    clickAddButton()
+
+    enterTipDetails()
+
+    clickSaveButton()
+
+    expectTipToBeListed()
   })
 
   describe('when registering a new tip', () => {
     beforeEach(() => {
       goToRegistry()
     })
+
 
     it('can cancel and go back to the list', () => {
       page.cancelButton().click()
@@ -30,6 +37,20 @@ describe('A TopTip user', () => {
     return page
   }
 
+  function clickAddButton () {
+    page.addButton().click()
+
+    page = new RegistryPage()
+    return page
+  }
+
+  function clickSaveButton () {
+    page.saveButton().click()
+
+    page = new MainPage()
+    return page
+  }
+
   function goToRegistry () {
     let mainPage = goToMainPage()
 
@@ -40,13 +61,27 @@ describe('A TopTip user', () => {
   }
 
   function expectTipsToBeListed () {
-    expect(page.firstTip().name()).equal('Bar Aragon')
-    expect(page.firstTip().address()).equal('Barón de San Petrillo (Beni)')
-    expect(page.firstTip().message()).contain('You must try the handed ice')
-    expect(page.firstTip().advisor()).equal('Manel')
+    expect(page.firstTip().name()).equal('Tramuntana')
+    expect(page.firstTip().address()).equal('Beni')
+    expect(page.firstTip().message()).contain('Tienes que probar las papas con mojo illo')
+    expect(page.firstTip().advisor()).equal('Morancos')
   }
 
   function expectToBeInMainPage () {
     expect(browser.element('body').getText()).to.contain('Tips')
+  }
+
+  function enterTipDetails () {
+    page.form().fillName('Tramuntana')
+    page.form().fillAddress('Beni')
+    page.form().fillMessage('Tienes que probar las papas con mojo illo')
+    page.form().fillAdvisor('Morancos')
+  }
+
+  function expectTipToBeListed () {
+    expect(page.firstTip().name()).equal('Tramuntana')
+    expect(page.firstTip().address()).equal('Beni')
+    expect(page.firstTip().message()).contain('Tienes que probar las papas con mojo illo')
+    expect(page.firstTip().advisor()).equal('Morancos')
   }
 })

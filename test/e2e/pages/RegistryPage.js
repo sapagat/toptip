@@ -4,7 +4,19 @@ class RegistryPage {
   constructor () {
     this.validate()
 
-    this.form = new Form($('.Form'))
+    this.theForm = new Form($('.Form'))
+  }
+
+  form () {
+    return this.theForm
+  }
+
+  saveButton () {
+    let element = $('#save_button')
+
+    assert.isTrue(element.isExisting(), 'Save button')
+
+    return element
   }
 
   cancelButton () {
@@ -12,7 +24,8 @@ class RegistryPage {
   }
 
   validate () {
-    assert.isTrue(this.cancelButton().isExisting())
+    assert.isTrue(this.cancelButton().isExisting(), 'Cancel button exists')
+    assert.isFalse(this.saveButton().isEnabled(), 'Save button disabled')
   }
 }
 
@@ -23,12 +36,24 @@ class Form {
     this.validate()
   }
 
+  fillName (value) {
+    this.nameInput().setValue(value)
+  }
+
   nameInput () {
     return this.element.$('#name')
   }
 
+  fillAddress (value) {
+    return this.addressInput().setValue(value)
+  }
+
   addressInput () {
     return this.element.$('#address')
+  }
+
+  fillMessage (value) {
+    return this.messageInput().setValue(value)
   }
 
   messageInput () {
@@ -37,6 +62,10 @@ class Form {
 
   advisorInput () {
     return this.element.$('#advisor')
+  }
+
+  fillAdvisor (value) {
+    return this.advisorInput().setValue(value)
   }
 
   validate () {

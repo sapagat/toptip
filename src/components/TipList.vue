@@ -1,6 +1,6 @@
 <template>
   <div class="TipList">
-    <tip-card v-for="tip in tips" :key="tip.id" :tip="tip"></tip-card>
+    <tip-card v-for="tip in tips" :key="tip.name" :tip="tip"></tip-card>
   </div>
 </template>
 

@@ -3,7 +3,7 @@
     <span class="TipCard-header">{{tip.name }}</span>
     <span class="TipCard-address">{{tip.address}}</span>
     <div class="TipCard-advise">
-      <p class="Advise-message">{{tip.message}}</p>
+      <p>{{quotedMessage}}</p>
     </div>
     <span class="TipCard-advisor">{{tip.advisor}}</span>
   </div>
@@ -12,8 +12,15 @@
 <script>
 export default {
   name: 'tip-card',
-  props: ['tip']
+  props: ['tip'],
 
+  computed: {
+    quotedMessage () {
+      if (!this.tip.message) return
+
+      return `"${this.tip.message}"`
+    }
+  }
 }
 </script>
 
@@ -47,13 +54,6 @@ export default {
 
 .TipCard-advise {
   padding: .5em 0;
-}
-
-.Advise-message:before {
-    content: open-quote;
-}
-.Advise-message:after {
-    content: close-quote;
 }
 
 .TipCard-advisor {
