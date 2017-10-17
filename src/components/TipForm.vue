@@ -22,6 +22,8 @@ export default {
 }
 
 .Field {
+  position: static;
+
   margin: 1em 0;
 }
 </style>

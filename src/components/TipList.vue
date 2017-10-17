@@ -44,8 +44,6 @@ export default {
 
 <style>
 .TipList {
-  overflow: auto;
-  margin: auto;
   display: flex;
   flex-direction: column;
 }
