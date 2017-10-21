@@ -1,55 +1,35 @@
 import MainPage from '@/pages/MainPage'
 import { mount } from 'avoriaz'
-import { shallow } from 'avoriaz'
-import Bus from '@/infrastructure/Bus'
-import Vue from 'vue'
 
 describe('MainPage', () => {
-  let router
+  it('displays a tip list', () => {
+    const wrapper = mount(MainPage, {
+      propsData: { tips : someTips() }
+    })
 
-  beforeEach(() => {
-    router = { push() {} }
-    stub(router, 'push')
+    expect(wrapper.html()).to.contain('La Lola')
+    expect(wrapper.html()).to.contain('Port Saplaya')
+    expect(wrapper.html()).to.contain('Bravas muy pro!')
+    expect(wrapper.html()).to.contain('Pucho')
   })
 
-  it('redirects to /registry by clicking the add button', () => {
-    const wrapper = mount(MainPage, {
-      globals: {
-        $router: router
-      }
-    })
+  it('asks to go to the registry', () => {
+    const wrapper = mount(MainPage)
+    stub(wrapper.vm, '$emit')
 
     wrapper.first('#add_tip').trigger('click')
 
-    expect(router.push).to.have.been.calledWith('/registry')
+    expect(wrapper.vm.$emit).to.have.been.calledWith('goToRegistry')
   })
 
-  describe('once mounted', () => {
-    let busStub
-
-    before(() => {
-      busStub = stub(Bus, 'publish')
-    })
-
-    after(() => {
-      busStub.restore()
-    })
-
-    it('asks for the tips list', () => {
-      const wrapper = mount(MainPage)
-
-      expect(Bus.publish).to.have.been.calledWith('tips','fetch.list')
-    })
-  })
-
-  it('displays the tips when they are ready', () => {
-    const wrapper = mount(MainPage)
-    const list = [{ name: 'La Murta' }]
-
-    Bus.publish('tips', 'list.ready', list)
-
-    expect(wrapper.vm.tips).to.equals(list)
-    return Vue.nextTick().
-      then(() => { expect(wrapper.html()).to.contain('La Murta') })
-  })
+  function someTips () {
+    return [
+      {
+        name: 'La Lola',
+        address: 'Port Saplaya',
+        message: 'Bravas muy pro!',
+        advisor: 'Pucho'
+      }
+    ]
+  }
 })

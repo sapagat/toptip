@@ -17,10 +17,10 @@
 import PageLayout from '../layout/PageLayout'
 import TipList from '../components/TipList'
 import AddButton from '../components/AddButton'
-import Bus from '../infrastructure/Bus'
 
 export default {
   name: 'app',
+  props: ['tips'],
 
   components: {
     PageLayout,
@@ -28,30 +28,9 @@ export default {
     AddButton
   },
 
-  data () {
-    return {
-      tips: []
-    }
-  },
-
-  mounted () {
-    this.subscribe()
-    this.start()
-  },
-
   methods: {
-    subscribe () {
-      Bus.subscribe('tips', 'list.ready', (tips) => {
-        this.tips = tips
-      })
-    },
-
-    start () {
-      Bus.publish('tips', 'fetch.list')
-    },
-
     goToRegistry () {
-      this.$router.push('/registry')
+      this.$emit('goToRegistry')
     }
   }
 }
