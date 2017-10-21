@@ -8,7 +8,7 @@
 
     <template slot="content">
       <tip-list></tip-list>
-      <add-button></add-button>
+      <add-button :onClick="goToRegistry"></add-button>
     </template>
   </page-layout>
 </template>
@@ -25,6 +25,12 @@ export default {
     PageLayout,
     TipList,
     AddButton
+  },
+
+  methods: {
+    goToRegistry () {
+      this.$router.push('/registry')
+    }
   }
 }
 </script>

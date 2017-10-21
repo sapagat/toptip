@@ -1,14 +1,16 @@
 <template>
   <div class="Container">
-    <div id="add_tip" @click="goToRegistry" class="button is-primary Button">+</div>
+    <div id="add_tip" @click="handleClick" class="button is-primary Button">+</div>
   </div>
 </template>
 
 <script>
 export default {
+  props: ['onClick'],
+
   methods: {
-    goToRegistry () {
-      this.$router.push('/registry')
+    handleClick () {
+      this.onClick()
     }
   }
 }
