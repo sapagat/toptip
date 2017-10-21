@@ -1,4 +1,4 @@
---webpack-config build/webpack.test.config.js
+--webpack-config build/webpack.test.conf.js
 --require test/unit/setup.js
 --colors
 --recursive
