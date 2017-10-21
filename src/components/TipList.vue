@@ -6,39 +6,13 @@
 
 <script>
 import TipCard from './TipCard'
-import Bus from '../infrastructure/Bus'
 
 export default {
   name: 'tip-list',
 
-  components: { TipCard },
+  props: ['tips'],
 
-  data () {
-    return {
-      tips: []
-    }
-  },
-
-  mounted () {
-    this.subscribe()
-    this.start()
-  },
-
-  methods: {
-    subscribe () {
-      Bus.subscribe('tips', 'list.ready', (data) => {
-        this.saveTips(data)
-      })
-    },
-
-    start () {
-      Bus.publish('tips', 'fetch.list')
-    },
-
-    saveTips (tips) {
-      this.tips = tips
-    }
-  }
+  components: { TipCard }
 }
 </script>
 

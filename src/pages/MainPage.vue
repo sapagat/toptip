@@ -7,7 +7,7 @@
     </template>
 
     <template slot="content">
-      <tip-list></tip-list>
+      <tip-list :tips="tips"></tip-list>
       <add-button :onClick="goToRegistry"></add-button>
     </template>
   </page-layout>
@@ -17,6 +17,7 @@
 import PageLayout from '../layout/PageLayout'
 import TipList from '../components/TipList'
 import AddButton from '../components/AddButton'
+import Bus from '../infrastructure/Bus'
 
 export default {
   name: 'app',
@@ -27,7 +28,28 @@ export default {
     AddButton
   },
 
+  data () {
+    return {
+      tips: []
+    }
+  },
+
+  mounted () {
+    this.subscribe()
+    this.start()
+  },
+
   methods: {
+    subscribe () {
+      Bus.subscribe('tips', 'list.ready', (tips) => {
+        this.tips = tips
+      })
+    },
+
+    start () {
+      Bus.publish('tips', 'fetch.list')
+    },
+
     goToRegistry () {
       this.$router.push('/registry')
     }
