@@ -1,6 +1,6 @@
 import { expect } from 'chai'
-import TestBus from './helpers/TestBus'
-import TipsService from '../../src/services/TipsService'
+import TestBus from '../helpers/TestBus'
+import TipsService from '../../../src/services/TipsService'
 
 describe('Tips Service', () => {
   let bus
