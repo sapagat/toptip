@@ -1,23 +1,26 @@
 import RegistryPageEnsemble from '@/ensembles/RegistryPage'
 import { mount } from 'avoriaz'
-import Bus from '@/infrastructure/Bus'
+import TestBus from '../helpers/TestBus'
 
 describe('RegistryPage Ensemble', () => {
-  let busStub
   let routerStub
   let router = { push () {} }
+  let bus
 
   beforeEach(() => {
-    Bus.reset()
+    bus = new TestBus()
   })
 
   afterEach(() => {
-    if(busStub) busStub.restore()
     if(routerStub) routerStub.restore()
   })
 
   it('binds a tip to its only son', () => {
-    const wrapper = mount(RegistryPageEnsemble)
+    const wrapper = mount(RegistryPageEnsemble, {
+      globals: {
+        $bus: bus
+      }
+    })
     const tip = aTip()
 
     wrapper.setData({tip})
@@ -26,31 +29,46 @@ describe('RegistryPage Ensemble', () => {
   })
 
   it('stores the tip when notified by its only son', () => {
-    busStub = stub(Bus, 'publish')
-    const wrapper = mount(RegistryPageEnsemble)
+    const wrapper = mount(RegistryPageEnsemble, {
+      globals: {
+        $bus: bus
+      }
+    })
     const tip = aTip()
 
     wrapper.setData({tip})
     wrapper.vm.$children[0].$emit('storeTip', tip)
 
-    expect(Bus.publish).to.have.been.calledWith('tips','store.tip', {tip})
+    expectPublicationMadeOn('tips', 'store.tip')
+    const tipStored = lastDataIn('tips','store.tip').tip
+    expect(tipStored).to.equal(tip)
   })
 
   it('redirects to  once a tip has been stored', () => {
     routerStub = stub(router, 'push')
     const wrapper = mount(RegistryPageEnsemble, {
       globals: {
-        $router: router
+        $router: router,
+        $bus: bus
       }
     })
     const tip = aTip()
 
-    Bus.publish('tips', 'tip.stored')
+    bus.publish('tips', 'tip.stored')
 
     expect(router.push).to.have.been.calledWith('/')
   })
 
   function aTip () {
     return { name: 'Bar Manolo'}
+  }
+
+  function expectPublicationMadeOn (channel, topic) {
+    let publications = bus.publicationsIn(channel,topic)
+    expect(publications).not.to.be.empty
+  }
+
+  function lastDataIn (channel, topic) {
+    return bus.lastDataIn(channel, topic)
   }
 })

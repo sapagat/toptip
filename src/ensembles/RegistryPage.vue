@@ -8,7 +8,6 @@
 
 <script>
 import RegistryPage from '../pages/RegistryPage'
-import Bus from '../infrastructure/Bus'
 
 export default {
   name: 'registry',
@@ -27,13 +26,13 @@ export default {
 
   methods: {
     subscribe () {
-      Bus.subscribe('tips', 'tip.stored', () => {
+      this.$bus.subscribe('tips', 'tip.stored', () => {
         this.goToMain()
       })
     },
 
     storeTip () {
-      Bus.publish('tips', 'store.tip', { tip: this.tip })
+      this.$bus.publish('tips', 'store.tip', { tip: this.tip })
     },
 
     goToMain () {

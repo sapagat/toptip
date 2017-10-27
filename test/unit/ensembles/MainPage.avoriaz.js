@@ -1,39 +1,33 @@
 import MainPageEnsemble from '@/ensembles/MainPage'
 import { mount } from 'avoriaz'
-import Bus from '@/infrastructure/Bus'
+import TestBus from '../helpers/TestBus'
 
 describe('MainPage Ensemble', () => {
   let router
+  let bus
 
   beforeEach(() => {
+    bus = new TestBus()
     router = { push() {} }
     stub(router, 'push')
   })
 
-  afterEach(() => {
-    Bus.reset()
-  })
-
-  describe('once mounted', () => {
-    let busStub
-
-    before(() => {
-      busStub = stub(Bus, 'publish')
+  it('asks for the tips list once mounted', () => {
+    const wrapper = mount(MainPageEnsemble, {
+      globals: {
+        $bus: bus
+      }
     })
 
-    after(() => {
-      busStub.restore()
-    })
-
-    it('asks for the tips list', () => {
-      const wrapper = mount(MainPageEnsemble)
-
-      expect(Bus.publish).to.have.been.calledWith('tips','fetch.list')
-    })
+    expectPublicationMadeOn('tips', 'fetch.list')
   })
 
   it('binds tips to its only son', () => {
-    const wrapper = mount(MainPageEnsemble)
+    const wrapper = mount(MainPageEnsemble, {
+      globals: {
+        $bus: bus
+      }
+    })
     const list = [{ name: 'La Murta' }]
 
     wrapper.setData({tips: list})
@@ -42,10 +36,14 @@ describe('MainPage Ensemble', () => {
   })
 
   it('saves the tips list when ready', () => {
-    const wrapper = mount(MainPageEnsemble)
+    const wrapper = mount(MainPageEnsemble, {
+      globals: {
+        $bus: bus
+      }
+    })
     const list = [{ name: 'La Murta' }]
 
-    Bus.publish('tips', 'list.ready', list)
+    bus.publish('tips', 'list.ready', list)
 
     expect(wrapper.vm.tips).to.equals(list)
   })
@@ -54,7 +52,8 @@ describe('MainPage Ensemble', () => {
   it('redirects to /registry when notified from its only son', () => {
     const wrapper = mount(MainPageEnsemble, {
       globals: {
-        $router: router
+        $router: router,
+        $bus: bus
       }
     })
 
@@ -62,4 +61,9 @@ describe('MainPage Ensemble', () => {
 
     expect(router.push).to.have.been.calledWith('/registry')
   })
+
+  function expectPublicationMadeOn (channel, topic) {
+    let publications = bus.publicationsIn(channel,topic)
+    expect(publications).not.to.be.empty
+  }
 })

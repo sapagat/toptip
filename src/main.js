@@ -19,8 +19,17 @@ const router = new VueRouter({
 
 Vue.use(VueRouter)
 
+class VueBus {
+  static install (Vue) {
+    Vue.prototype.$bus = Bus
+  }
+}
+
+Vue.use(VueBus)
+
 new Vue({
   el: '#app',
   router,
+  bus: VueBus,
   template: '<router-view></router-view>'
 })

@@ -8,7 +8,6 @@
 
 <script>
 import MainPage from '../pages/MainPage'
-import Bus from '../infrastructure/Bus'
 
 export default {
   name: 'main',
@@ -30,13 +29,13 @@ export default {
 
   methods: {
     subscribe () {
-      Bus.subscribe('tips', 'list.ready', (tips) => {
+      this.$bus.subscribe('tips', 'list.ready', (tips) => {
         this.tips = tips
       })
     },
 
     start () {
-      Bus.publish('tips', 'fetch.list')
+      this.$bus.publish('tips', 'fetch.list')
     },
 
     goToRegistry () {
