@@ -28,6 +28,30 @@ describe('RegistryPage Ensemble', () => {
     expect(wrapper.vm.$children[0].tip).to.eq(tip)
   })
 
+  it('says to its only son when the tip is storable', () => {
+    const wrapper = mount(RegistryPageEnsemble, {
+      globals: {
+        $bus: bus
+      }
+    })
+
+    wrapper.setData({tip: aCompleteTip()})
+
+    expect(wrapper.vm.$children[0].storable).to.eq(true)
+  })
+
+  it('says to its only son when the tip is not storable', () => {
+    const wrapper = mount(RegistryPageEnsemble, {
+      globals: {
+        $bus: bus
+      }
+    })
+
+    wrapper.setData({tip: anIncompleteTip()})
+
+    expect(wrapper.vm.$children[0].storable).to.eq(false)
+  })
+
   it('stores the tip when notified by its only son', () => {
     const wrapper = mount(RegistryPageEnsemble, {
       globals: {
@@ -44,7 +68,7 @@ describe('RegistryPage Ensemble', () => {
     expect(tipStored).to.equal(tip)
   })
 
-  it('redirects to  once a tip has been stored', () => {
+  it('redirects to the main page once a tip has been stored', () => {
     routerStub = stub(router, 'push')
     const wrapper = mount(RegistryPageEnsemble, {
       globals: {
@@ -59,8 +83,32 @@ describe('RegistryPage Ensemble', () => {
     expect(router.push).to.have.been.calledWith('/')
   })
 
+  it('goes back to main page when notified by its only son', () => {
+    routerStub = stub(router, 'push')
+    const wrapper = mount(RegistryPageEnsemble, {
+      globals: {
+        $router: router,
+        $bus: bus
+      }
+    })
+
+    wrapper.vm.$children[0].$emit('goBack')
+
+    expect(router.push).to.have.been.calledWith('/')
+  })
+
   function aTip () {
     return { name: 'Bar Manolo'}
+  }
+
+  function aCompleteTip () {
+    return { name: 'Bar Manolo', address: 'Alboraya' }
+  }
+
+  function anIncompleteTip () {
+    return {
+      name: 'Bar Manolo'
+    }
   }
 
   function expectPublicationMadeOn (channel, topic) {

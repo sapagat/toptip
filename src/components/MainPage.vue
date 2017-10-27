@@ -15,8 +15,8 @@
 
 <script>
 import PageLayout from '../layout/PageLayout'
-import TipList from '../components/TipList'
-import AddButton from '../components/AddButton'
+import TipList from './TipList'
+import AddButton from './AddButton'
 
 export default {
   name: 'main-page',

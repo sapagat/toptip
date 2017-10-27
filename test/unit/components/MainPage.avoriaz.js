@@ -1,4 +1,4 @@
-import MainPage from '@/pages/MainPage'
+import MainPage from '@/components/MainPage'
 import { mount } from 'avoriaz'
 
 describe('MainPage', () => {
