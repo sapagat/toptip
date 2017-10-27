@@ -19,21 +19,13 @@ import TipForm from '../components/TipForm'
 import Bus from '../infrastructure/Bus'
 
 export default {
-  name: 'app',
+  name: 'registry-page',
+
+  props: ['tip'],
 
   components: {
     PageLayout,
     TipForm
-  },
-
-  mounted () {
-    Bus.subscribe('tips', 'tip.stored', () => { this.goToMain() })
-  },
-
-  data () {
-    return {
-      tip: {}
-    }
   },
 
   computed: {

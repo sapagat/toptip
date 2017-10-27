@@ -10,6 +10,10 @@ describe('MainPage Ensemble', () => {
     stub(router, 'push')
   })
 
+  afterEach(() => {
+    Bus.reset()
+  })
+
   describe('once mounted', () => {
     let busStub
 
@@ -47,7 +51,7 @@ describe('MainPage Ensemble', () => {
   })
 
 
-  it('redirects to /registry when from its only son', () => {
+  it('redirects to /registry when notified from its only son', () => {
     const wrapper = mount(MainPageEnsemble, {
       globals: {
         $router: router

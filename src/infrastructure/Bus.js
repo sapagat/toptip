@@ -16,6 +16,10 @@ class Bus {
       callback
     })
   }
+
+  static reset () {
+    postal.reset()
+  }
 }
 
 export default Bus

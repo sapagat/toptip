@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import MainPageEnsemble from './ensembles/MainPage.vue'
-import RegistryPage from './pages/RegistryPage'
+import RegistryPageEnsemble from './ensembles/RegistryPage.vue'
 import TipsService from './services/TipsService'
 import Bus from './infrastructure/Bus'
 
@@ -13,7 +13,7 @@ new TipsService(Bus)
 const router = new VueRouter({
   routes: [
     { path: '/', component: MainPageEnsemble },
-    { path: '/registry', component: RegistryPage }
+    { path: '/registry', component: RegistryPageEnsemble }
   ]
 })
 

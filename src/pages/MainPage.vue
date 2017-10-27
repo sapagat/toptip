@@ -19,7 +19,7 @@ import TipList from '../components/TipList'
 import AddButton from '../components/AddButton'
 
 export default {
-  name: 'app',
+  name: 'main-page',
   props: ['tips'],
 
   components: {

@@ -1,5 +1,3 @@
-import Bus from '../../../src/infrastructure/Bus'
-
 class TestBus {
   constructor () {
     this.subscriptions = {}
@@ -7,12 +5,15 @@ class TestBus {
   }
 
   subscribe (channel, topic, callback) {
-    Bus.subscribe(channel, topic, callback)
+   this.subscriptions[channel] = this.subscriptions[channel] || {}
+   this.subscriptions[channel][topic] = this.subscriptions[channel][topic] || []
+
+   this.subscriptions[channel][topic].push(callback)
   }
 
   publish (channel, topic, data) {
     this.recordPublication(channel, topic, data)
-    Bus.publish(channel, topic, data)
+    this.performPublication(channel, topic, data)
   }
 
   publicationsIn (channel, topic) {
@@ -35,6 +36,15 @@ class TestBus {
     const publications = this.publicationsIn(channel, topic)
 
     publications.push({ data: data})
+  }
+
+  performPublication (channel, topic, data) {
+    if (!this.subscriptions[channel]) return
+    if (!this.subscriptions[channel][topic]) return
+
+    for (const callback of this.subscriptions[channel][topic]) {
+      callback(data)
+    }
   }
 }
 
