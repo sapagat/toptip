@@ -59,6 +59,13 @@ class Tip {
 
     return advisor.getText()
   }
+
+  reviewButton () {
+    let button = this.element.$('.TipCard-reviewButton')
+    assert.isTrue(button.isExisting(), 'Review button')
+
+    return button
+  }
 }
 
 module.exports = MainPage

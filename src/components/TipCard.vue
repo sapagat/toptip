@@ -1,5 +1,8 @@
 <template>
   <div class="TipCard">
+    <div @click="review" class="TipCard-reviewButton">
+      <i class="fa fa-pencil-square-o"></i>
+    </div>
     <span class="TipCard-header">{{tip.name }}</span>
     <span class="TipCard-address">{{tip.address}}</span>
     <div class="TipCard-advise">
@@ -20,6 +23,12 @@ export default {
 
       return `"${this.tip.message}"`
     }
+  },
+
+  methods: {
+    review () {
+      this.$emit('review')
+    }
   }
 }
 </script>
@@ -31,6 +40,10 @@ export default {
 
   box-shadow: 0 1px 3px 0 #d4d4d5;
   border-top: 1px solid rgba(34,36,38,.1);
+}
+
+.TipCard-reviewButton {
+  float: right;
 }
 
 .TipCard-header {

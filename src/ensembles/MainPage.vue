@@ -2,6 +2,7 @@
   <main-page
     :tips="tips"
     @goToRegistry="goToRegistry"
+    @goToReview="goToReview"
   >
   </main-page>
 </template>
@@ -40,6 +41,10 @@ export default {
 
     goToRegistry () {
       this.$router.push('/registry')
+    },
+
+    goToReview () {
+      this.$router.push('/review')
     }
   }
 }

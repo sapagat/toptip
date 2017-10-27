@@ -1,6 +1,12 @@
 <template>
   <div class="TipList">
-    <tip-card v-for="tip in tips" :key="tip.name" :tip="tip"></tip-card>
+    <tip-card
+      v-for="tip in tips"
+      :key="tip.name"
+      :tip="tip"
+      @review="notifyReview"
+      >
+    </tip-card>
   </div>
 </template>
 
@@ -12,7 +18,13 @@ export default {
 
   props: ['tips'],
 
-  components: { TipCard }
+  components: { TipCard },
+
+  methods: {
+    notifyReview () {
+      this.$emit('review')
+    }
+  }
 }
 </script>
 

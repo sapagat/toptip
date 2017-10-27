@@ -48,6 +48,12 @@ describe('MainPage Ensemble', () => {
     expectRedirectionMadeTo('/registry')
   })
 
+  it('redirects to the review page when notified by its only son', () => {
+    onlySonOf(wrapper).fire('goToReview')
+
+    expectRedirectionMadeTo('/review')
+  })
+
   function expectPublicationMadeOn (channel, topic) {
     let publications = bus.publicationsIn(channel,topic)
     expect(publications).not.to.be.empty

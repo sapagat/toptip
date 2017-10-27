@@ -7,7 +7,7 @@
     </template>
 
     <template slot="content">
-      <tip-list :tips="tips"></tip-list>
+      <tip-list :tips="tips" @review="goToReview"></tip-list>
       <add-button :onClick="goToRegistry"></add-button>
     </template>
   </page-layout>
@@ -31,6 +31,10 @@ export default {
   methods: {
     goToRegistry () {
       this.$emit('goToRegistry')
+    },
+
+    goToReview () {
+      this.$emit('goToReview')
     }
   }
 }

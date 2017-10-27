@@ -17,7 +17,7 @@ describe('A TopTip user', () => {
     expectTipToBeListed()
   })
 
-  describe('when registering a new tip', () => {
+  context('when registering a new tip', () => {
     beforeEach(() => {
       goToRegistry()
     })
@@ -27,6 +27,21 @@ describe('A TopTip user', () => {
       page.cancelButton().click()
 
       expectToBeInMainPage()
+    })
+  })
+
+  context('once she has registered a tip', () => {
+    before(() => {
+      goToMainPage()
+      clickAddButton()
+      enterTipDetails()
+      clickSaveButton()
+    })
+
+    it('can give her opinion by adding a review', () => {
+      page.firstTip().reviewButton().click()
+
+      expectToBeInReviewPage()
     })
   })
 
@@ -83,5 +98,10 @@ describe('A TopTip user', () => {
     expect(page.firstTip().address()).equal('Beni')
     expect(page.firstTip().message()).contain('Tienes que probar las papas con mojo illo')
     expect(page.firstTip().advisor()).equal('Morancos')
+  }
+
+  function expectToBeInReviewPage () {
+    expect(browser.element('body').getText()).not.to.contain('Tips')
+    expect(browser.element('body').getText()).to.contain('Add your review')
   }
 })
