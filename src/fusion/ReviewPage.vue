@@ -4,7 +4,7 @@
 
 <script>
 import ReviewPage from '../components/ReviewPage'
-import ReviewCore from '../core/ReviewCore'
+import ReviewCore from '../cores/ReviewCore'
 import fusion from './fusion'
 
 export default {

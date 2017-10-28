@@ -1,4 +1,4 @@
-import ReviewCore from '@/core/ReviewCore'
+import ReviewCore from '@/cores/ReviewCore'
 import Navigator from '@/infrastructure/Navigator'
 import Bus from '@/infrastructure/Bus'
 

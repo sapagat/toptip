@@ -1,6 +1,6 @@
 import Navigator from '@/infrastructure/Navigator'
 import Bus from '@/infrastructure/Bus'
-import RegistryCore from '@/core/RegistryCore'
+import RegistryCore from '@/cores/RegistryCore'
 
 describe('RegistryCore', () => {
   let testable

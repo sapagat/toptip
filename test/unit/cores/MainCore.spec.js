@@ -1,6 +1,6 @@
 import Bus from '@/infrastructure/Bus'
 import Navigator from '@/infrastructure/Navigator'
-import MainCore from '@/core/MainCore'
+import MainCore from '@/cores/MainCore'
 
 describe('MainCore', () => {
   let testable

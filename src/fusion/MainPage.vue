@@ -7,7 +7,7 @@
 
 <script>
 import MainPage from '../components/MainPage'
-import MainCore from '../core/MainCore'
+import MainCore from '../cores/MainCore'
 import fusion from './fusion'
 
 export default {

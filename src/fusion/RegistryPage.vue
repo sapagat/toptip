@@ -8,7 +8,7 @@
 
 <script>
 import RegistryPage from '../components/RegistryPage'
-import RegistryCore from '../core/RegistryCore'
+import RegistryCore from '../cores/RegistryCore'
 import fusion from './fusion'
 
 export default {
