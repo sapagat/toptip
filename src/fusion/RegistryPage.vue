@@ -1,14 +1,14 @@
 <template>
   <registry-page
     :tip = "tip"
-    :storable = "core.storable()"
+    :storable = "nucleus.storable()"
   >
   </registry-page>
 </template>
 
 <script>
 import RegistryPage from '../components/RegistryPage'
-import RegistryCore from '../cores/RegistryCore'
+import RegistryNucleus from '../nucleus/RegistryNucleus'
 import fusion from './fusion'
 
 export default {
@@ -17,7 +17,7 @@ export default {
   components: { RegistryPage },
 
   beforeCreate () {
-    this.core = new RegistryCore()
+    this.nucleus = new RegistryNucleus()
     this.events = {
       storeTip: 'storeTip',
       goBack: 'goToMain'

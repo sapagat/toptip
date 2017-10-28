@@ -1,14 +1,14 @@
-import ReviewCore from '@/cores/ReviewCore'
+import ReviewNucleus from '@/nucleus/ReviewNucleus'
 import Navigator from '@/infrastructure/Navigator'
 import Bus from '@/infrastructure/Bus'
 
-describe('ReviewCore', () => {
+describe('ReviewNucleus', () => {
   let navigatorStub
   let testable
   let busStub
 
   beforeEach(() => {
-    testable = new ReviewCore()
+    testable = new ReviewNucleus()
     navigatorStub = stub(Navigator, 'goTo')
   })
 

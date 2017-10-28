@@ -8,7 +8,7 @@
     </template>
 
     <template slot="content">
-      <tip-form :tip=tip></tip-form>
+      <tip-form :tip="tip"></tip-form>
     </template>
   </page-layout>
 </template>

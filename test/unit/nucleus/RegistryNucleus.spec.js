@@ -1,14 +1,14 @@
 import Navigator from '@/infrastructure/Navigator'
 import Bus from '@/infrastructure/Bus'
-import RegistryCore from '@/cores/RegistryCore'
+import RegistryNucleus from '@/nucleus/RegistryNucleus'
 
-describe('RegistryCore', () => {
+describe('RegistryNucleus', () => {
   let testable
   let navigatorStub
   let busStub
 
   beforeEach(() => {
-    testable = new RegistryCore()
+    testable = new RegistryNucleus()
     navigatorStub = stub(Navigator, 'goTo')
   })
 

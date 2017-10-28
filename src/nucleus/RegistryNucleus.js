@@ -1,8 +1,8 @@
 import Bus from '../infrastructure/Bus'
 import Navigator from '../infrastructure/Navigator'
-import Core from './Core'
+import Nucleus from './Nucleus'
 
-class RegistryCore extends Core {
+class RegistryNucleus extends Nucleus {
   constructor () {
     super()
 
@@ -41,4 +41,4 @@ class RegistryCore extends Core {
   }
 }
 
-export default RegistryCore
+export default RegistryNucleus

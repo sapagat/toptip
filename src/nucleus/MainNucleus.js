@@ -1,8 +1,8 @@
 import Bus from '../infrastructure/Bus'
 import Navigator from '../infrastructure/Navigator'
-import Core from './Core'
+import Nucleus from './Nucleus'
 
-class MainCore extends Core {
+class MainNucleus extends Nucleus {
   constructor () {
     super()
 
@@ -34,4 +34,4 @@ class MainCore extends Core {
   }
 }
 
-export default MainCore
+export default MainNucleus

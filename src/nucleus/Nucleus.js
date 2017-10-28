@@ -1,4 +1,4 @@
-class Core {
+class Nucleus {
   data () { return {} }
 
   start () {}
@@ -6,4 +6,4 @@ class Core {
   subscribe () {}
 }
 
-export default Core
+export default Nucleus

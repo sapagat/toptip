@@ -1,14 +1,14 @@
 import Bus from '@/infrastructure/Bus'
 import Navigator from '@/infrastructure/Navigator'
-import MainCore from '@/cores/MainCore'
+import MainNucleus from '@/nucleus/MainNucleus'
 
-describe('MainCore', () => {
+describe('MainNucleus', () => {
   let testable
   let navigatorStub
   let busStub
 
   beforeEach(() => {
-    testable = new MainCore()
+    testable = new MainNucleus()
     navigatorStub = stub(Navigator, 'goTo')
   })
 

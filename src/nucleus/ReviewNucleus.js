@@ -1,8 +1,8 @@
 import Navigator from '../infrastructure/Navigator'
 import Bus from '../infrastructure/Bus'
-import Core from './Core'
+import Nucleus from './Nucleus'
 
-class ReviewCore extends Core {
+class ReviewNucleus extends Nucleus {
   constructor () {
     super()
 
@@ -31,4 +31,4 @@ class ReviewCore extends Core {
   }
 }
 
-export default ReviewCore
+export default ReviewNucleus

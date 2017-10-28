@@ -1,17 +1,17 @@
 const fusion = {
   created () {
-    this.core.subscribe()
+    this.nucleus.subscribe()
   },
 
   data () {
-    return this.core.data()
+    return this.nucleus.data()
   },
 
   mounted () {
-    this.core.start()
+    this.nucleus.start()
 
     Object.entries(this.events).forEach(([event, handler]) => {
-      this.onlySon().$on(event, this.core[handler])
+      this.onlySon().$on(event, this.nucleus[handler])
     })
   },
 

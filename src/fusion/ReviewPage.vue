@@ -4,7 +4,7 @@
 
 <script>
 import ReviewPage from '../components/ReviewPage'
-import ReviewCore from '../cores/ReviewCore'
+import ReviewNucleus from '../nucleus/ReviewNucleus'
 import fusion from './fusion'
 
 export default {
@@ -13,7 +13,7 @@ export default {
   components: { ReviewPage },
 
   beforeCreate () {
-    this.core = new ReviewCore()
+    this.nucleus = new ReviewNucleus()
     this.events = {
       goBack: 'goToMain'
     }
