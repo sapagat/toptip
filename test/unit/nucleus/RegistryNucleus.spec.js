@@ -1,28 +1,26 @@
 import Navigator from '@/infrastructure/Navigator'
-import Bus from '@/infrastructure/Bus'
+import TestBus from '../helpers/TestBus'
 import RegistryNucleus from '@/nucleus/RegistryNucleus'
 
 describe('RegistryNucleus', () => {
   let testable
   let navigatorStub
-  let busStub
+  let bus
 
   beforeEach(() => {
-    testable = new RegistryNucleus()
+    bus = new TestBus()
+    testable = new RegistryNucleus(bus)
     navigatorStub = stub(Navigator, 'goTo')
   })
 
   afterEach(() => {
     if(navigatorStub) navigatorStub.restore()
-    if(busStub) busStub.restore()
-
-    Bus.reset()
   })
 
   it('redirects to the main page once a tip has been stored', () => {
     testable.subscribe()
 
-    Bus.publish('tips','tip.stored')
+    bus.publish('tips', 'tip.stored')
 
     expect(Navigator.goTo).to.have.been.calledWith('/')
   })
@@ -37,14 +35,13 @@ describe('RegistryNucleus', () => {
   })
 
   it('stores the tip', () => {
-    busStub = stub(Bus, 'publish')
     const tip = aTip()
-
     testable.tip = tip
 
     testable.storeTip()
 
-    expect(Bus.publish).to.have.been.calledWith('tips', 'store.tip', {tip})
+    expectPublicationMadeOn('tips', 'store.tip')
+    expect(lastDataIn('tips', 'store.tip').tip).to.include(tip)
   })
 
   it('redirects to the main page', () => {
@@ -55,6 +52,15 @@ describe('RegistryNucleus', () => {
 
   function aTip () {
     return { name: 'Bar Manolo'}
+  }
+
+  function expectPublicationMadeOn (channel, topic) {
+    let publications = bus.publicationsIn(channel,topic)
+    expect(publications).not.to.be.empty
+  }
+
+  function lastDataIn (channel, topic) {
+    return bus.lastDataIn(channel, topic)
   }
 })
 

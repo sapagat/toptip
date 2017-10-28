@@ -11,7 +11,7 @@ const fusion = {
     this.nucleus.start()
 
     Object.entries(this.events).forEach(([event, handler]) => {
-      this.onlySon().$on(event, this.nucleus[handler])
+      this.onlySon().$on(event, this.nucleus[handler].bind(this.nucleus))
     })
   },
 

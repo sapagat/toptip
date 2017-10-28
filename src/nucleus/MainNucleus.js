@@ -1,10 +1,9 @@
-import Bus from '../infrastructure/Bus'
 import Navigator from '../infrastructure/Navigator'
 import Nucleus from './Nucleus'
 
 class MainNucleus extends Nucleus {
-  constructor () {
-    super()
+  constructor (bus) {
+    super(bus)
 
     this.tips = []
   }
@@ -16,13 +15,13 @@ class MainNucleus extends Nucleus {
   }
 
   subscribe () {
-    Bus.subscribe('tips', 'list.ready', (tips) => {
+    this.subscribeTo('tips', 'list.ready', (tips) => {
       tips.forEach((tip) => { this.tips.push(tip) })
     })
   }
 
   start () {
-    Bus.publish('tips', 'fetch.list')
+    this.publish('tips', 'fetch.list')
   }
 
   goToRegistry () {

@@ -1,10 +1,9 @@
-import Bus from '../infrastructure/Bus'
 import Navigator from '../infrastructure/Navigator'
 import Nucleus from './Nucleus'
 
 class RegistryNucleus extends Nucleus {
-  constructor () {
-    super()
+  constructor (bus) {
+    super(bus)
 
     this.tip = {}
   }
@@ -16,13 +15,13 @@ class RegistryNucleus extends Nucleus {
   }
 
   subscribe () {
-    Bus.subscribe('tips', 'tip.stored', () => {
+    this.subscribeTo('tips', 'tip.stored', () => {
       this.goToMain()
     })
   }
 
   storeTip () {
-    Bus.publish('tips', 'store.tip', { tip: this.tip })
+    this.publish('tips', 'store.tip', { tip: this.tip })
   }
 
   storable () {

@@ -1,37 +1,33 @@
-import Bus from '@/infrastructure/Bus'
+import TestBus from '../helpers/TestBus'
 import Navigator from '@/infrastructure/Navigator'
 import MainNucleus from '@/nucleus/MainNucleus'
 
 describe('MainNucleus', () => {
   let testable
   let navigatorStub
-  let busStub
+  let bus
 
   beforeEach(() => {
-    testable = new MainNucleus()
+    bus = new TestBus()
+    testable = new MainNucleus(bus)
     navigatorStub = stub(Navigator, 'goTo')
   })
 
   afterEach(() => {
     if(navigatorStub) navigatorStub.restore()
-    if(busStub) busStub.restore()
-
-    Bus.reset()
   })
 
   it('starts asking for the tips list', () => {
-    busStub = stub(Bus, 'publish')
-
     testable.start()
 
-    expect(Bus.publish).to.have.been.calledWith('tips','fetch.list')
+    expectPublicationMadeOn('tips', 'fetch.list')
   })
 
   it('saves the tips when available', () => {
     testable.subscribe()
     let list = [aTip()]
 
-    Bus.publish('tips','list.ready', list)
+    bus.publish('tips','list.ready', list)
 
     expect(testable.tips[0]).to.include(aTip())
   })
@@ -50,5 +46,10 @@ describe('MainNucleus', () => {
 
   function aTip () {
     return { foo: 'bar' }
+  }
+
+  function expectPublicationMadeOn (channel, topic) {
+    let publications = bus.publicationsIn(channel,topic)
+    expect(publications).not.to.be.empty
   }
 })

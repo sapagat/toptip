@@ -1,10 +1,9 @@
 import Navigator from '../infrastructure/Navigator'
-import Bus from '../infrastructure/Bus'
 import Nucleus from './Nucleus'
 
 class ReviewNucleus extends Nucleus {
-  constructor () {
-    super()
+  constructor (bus) {
+    super(bus)
 
     this.tip = {}
   }
@@ -16,14 +15,14 @@ class ReviewNucleus extends Nucleus {
   }
 
   subscribe () {
-    Bus.subscribe('tips', 'tip.ready', (data) => {
+    this.subscribeTo('tips', 'tip.ready', (data) => {
       this.tip = data.tip
     })
   }
 
   start () {
     let tipId = Navigator.id()
-    Bus.publish('tips', 'retrieve.tip', { id: tipId })
+    this.publish('tips', 'retrieve.tip', { id: tipId })
   }
 
   goToMain () {

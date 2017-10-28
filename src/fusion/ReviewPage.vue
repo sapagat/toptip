@@ -5,6 +5,7 @@
 <script>
 import ReviewPage from '../components/ReviewPage'
 import ReviewNucleus from '../nucleus/ReviewNucleus'
+import Bus from '../infrastructure/Bus'
 import fusion from './fusion'
 
 export default {
@@ -13,7 +14,7 @@ export default {
   components: { ReviewPage },
 
   beforeCreate () {
-    this.nucleus = new ReviewNucleus()
+    this.nucleus = new ReviewNucleus(Bus)
     this.events = {
       goBack: 'goToMain'
     }

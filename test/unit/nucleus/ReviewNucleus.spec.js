@@ -1,41 +1,36 @@
 import ReviewNucleus from '@/nucleus/ReviewNucleus'
 import Navigator from '@/infrastructure/Navigator'
-import Bus from '@/infrastructure/Bus'
+import TestBus from '../helpers/TestBus'
 
 describe('ReviewNucleus', () => {
   let navigatorStub
   let testable
-  let busStub
+  let bus
 
   beforeEach(() => {
-    testable = new ReviewNucleus()
+    bus = new TestBus()
+    testable = new ReviewNucleus(bus)
     navigatorStub = stub(Navigator, 'goTo')
   })
 
   afterEach(() => {
     if(navigatorStub) navigatorStub.restore()
-    if(busStub) busStub.restore()
-    Bus.reset()
   })
 
   it('starts by asking for the tip to review', () => {
-    busStub = stub(Bus, 'publish')
     location.hash = '/review/AN_ID'
 
     testable.start()
 
-    expect(Bus.publish).to.have.been.calledWith(
-      'tips',
-      'retrieve.tip',
-      {id: 'AN_ID'}
-    )
+    expectPublicationMadeOn('tips', 'retrieve.tip')
+    expect(lastDataIn('tips', 'retrieve.tip').id).to.equal('AN_ID')
   })
 
   it('keeps the tip when available', () => {
     testable.subscribe()
     let tip = aTip()
 
-    Bus.publish('tips', 'tip.ready', { tip })
+    bus.publish('tips', 'tip.ready', { tip })
 
     expect(testable.tip).to.equal(tip)
   })
@@ -50,5 +45,14 @@ describe('ReviewNucleus', () => {
     return {
       name: 'Pub Pob'
     }
+  }
+
+  function expectPublicationMadeOn (channel, topic) {
+    let publications = bus.publicationsIn(channel,topic)
+    expect(publications).not.to.be.empty
+  }
+
+  function lastDataIn (channel, topic) {
+    return bus.lastDataIn(channel, topic)
   }
 })

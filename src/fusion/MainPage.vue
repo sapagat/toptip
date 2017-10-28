@@ -8,6 +8,7 @@
 <script>
 import MainPage from '../components/MainPage'
 import MainNucleus from '../nucleus/MainNucleus'
+import Bus from '../infrastructure/Bus'
 import fusion from './fusion'
 
 export default {
@@ -16,7 +17,7 @@ export default {
   components: { MainPage },
 
   beforeCreate () {
-    this.nucleus = new MainNucleus()
+    this.nucleus = new MainNucleus(Bus)
     this.events = {
       goToRegistry: 'goToRegistry',
       goToReview: 'goToReview'
