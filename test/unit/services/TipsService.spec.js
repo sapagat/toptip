@@ -29,6 +29,18 @@ describe('Tips Service', () => {
     expectPublicationMadeOn('tips', 'tip.stored')
   })
 
+  it('retrieves tips', () => {
+    let tip = aTip()
+    bus.publish('tips', 'store.tip', {tip})
+    let storedTip = lastDataIn('tips','tip.stored').tip
+
+    bus.publish('tips', 'retrieve.tip', { id: storedTip.id })
+
+    expectPublicationMadeOn('tips', 'tip.ready')
+    let publishedTip = lastDataIn('tips', 'tip.ready').tip
+    expect(storedTip.id).to.equal(publishedTip.id)
+  })
+
   function aTip () {
     return {
       name: 'A_NAME',

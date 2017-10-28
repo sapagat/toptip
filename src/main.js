@@ -15,7 +15,7 @@ const router = new VueRouter({
   routes: [
     { path: '/', component: MainPageEnsemble },
     { path: '/registry', component: RegistryPageEnsemble },
-    { path: '/review', component: ReviewPageEnsemble }
+    { path: '/review/:id', component: ReviewPageEnsemble }
   ]
 })
 

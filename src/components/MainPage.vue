@@ -33,8 +33,8 @@ export default {
       this.$emit('goToRegistry')
     },
 
-    goToReview () {
-      this.$emit('goToReview')
+    goToReview (event) {
+      this.$emit('goToReview', event)
     }
   }
 }

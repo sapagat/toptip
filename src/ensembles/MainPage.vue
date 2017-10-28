@@ -43,8 +43,9 @@ export default {
       this.$router.push('/registry')
     },
 
-    goToReview () {
-      this.$router.push('/review')
+    goToReview (event) {
+      let id = event.id
+      this.$router.push('/review/' + id)
     }
   }
 }

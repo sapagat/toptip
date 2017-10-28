@@ -49,9 +49,9 @@ describe('MainPage Ensemble', () => {
   })
 
   it('redirects to the review page when notified by its only son', () => {
-    onlySonOf(wrapper).fire('goToReview')
+    onlySonOf(wrapper).fire('goToReview', { id: 10 })
 
-    expectRedirectionMadeTo('/review')
+    expectRedirectionMadeTo('/review/10')
   })
 
   function expectPublicationMadeOn (channel, topic) {

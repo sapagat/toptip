@@ -27,7 +27,7 @@ export default {
 
   methods: {
     review () {
-      this.$emit('review')
+      this.$emit('review', {id: this.tip.id})
     }
   }
 }

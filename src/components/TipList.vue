@@ -21,8 +21,8 @@ export default {
   components: { TipCard },
 
   methods: {
-    notifyReview () {
-      this.$emit('review')
+    notifyReview (event) {
+      this.$emit('review', event)
     }
   }
 }
