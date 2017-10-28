@@ -1,12 +1,15 @@
 import Navigator from '../infrastructure/Navigator'
 import Bus from '../infrastructure/Bus'
+import Core from './Core'
 
-class ReviewCore {
+class ReviewCore extends Core {
   constructor () {
+    super()
+
     this.tip = {}
   }
 
-  goods () {
+  data () {
     return {
       tip: this.tip
     }

@@ -5,9 +5,11 @@
 <script>
 import ReviewPage from '../components/ReviewPage'
 import ReviewCore from '../core/ReviewCore'
+import fusion from './fusion'
 
 export default {
   name: 'review',
+  mixins: [fusion],
   components: { ReviewPage },
 
   beforeCreate () {
@@ -15,18 +17,6 @@ export default {
     this.events = {
       goBack: 'goToMain'
     }
-  },
-
-  data () {
-    return this.core.goods()
-  },
-
-  mounted () {
-    this.core.start()
-
-    Object.entries(this.events).forEach(([event, handler]) => {
-      this.$children[0].$on(event, this.core[handler])
-    })
   }
 }
 </script>

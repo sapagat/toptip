@@ -9,10 +9,11 @@
 <script>
 import RegistryPage from '../components/RegistryPage'
 import RegistryCore from '../core/RegistryCore'
+import fusion from './fusion'
 
 export default {
   name: 'registry',
-
+  mixins: [fusion],
   components: { RegistryPage },
 
   beforeCreate () {
@@ -21,20 +22,6 @@ export default {
       storeTip: 'storeTip',
       goBack: 'goToMain'
     }
-  },
-
-  created () {
-    this.core.subscribe()
-  },
-
-  data () {
-    return this.core.goods()
-  },
-
-  mounted () {
-    Object.entries(this.events).forEach(([event, handler]) => {
-      this.$children[0].$on(event, this.core[handler])
-    })
   }
 }
 </script>

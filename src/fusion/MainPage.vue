@@ -8,10 +8,11 @@
 <script>
 import MainPage from '../components/MainPage'
 import MainCore from '../core/MainCore'
+import fusion from './fusion'
 
 export default {
   name: 'main',
-
+  mixins: [ fusion ],
   components: { MainPage },
 
   beforeCreate () {
@@ -20,22 +21,6 @@ export default {
       goToRegistry: 'goToRegistry',
       goToReview: 'goToReview'
     }
-  },
-
-  created () {
-    this.core.subscribe()
-  },
-
-  data () {
-    return this.core.goods()
-  },
-
-  mounted () {
-    this.core.start()
-
-    Object.entries(this.events).forEach(([event, handler]) => {
-      this.$children[0].$on(event, this.core[handler])
-    })
   }
 }
 </script>
