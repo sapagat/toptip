@@ -1,8 +1,8 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import MainPageEnsemble from './ensembles/MainPage.vue'
-import RegistryPageEnsemble from './ensembles/RegistryPage.vue'
-import ReviewPageEnsemble from './ensembles/ReviewPage.vue'
+import MainPageFusion from './fusion/MainPage.vue'
+import RegistryPageFusion from './fusion/RegistryPage.vue'
+import ReviewPageFusion from './fusion/ReviewPage.vue'
 import TipsService from './services/TipsService'
 import Bus from './infrastructure/Bus'
 
@@ -13,21 +13,13 @@ new TipsService(Bus)
 
 const router = new VueRouter({
   routes: [
-    { path: '/', component: MainPageEnsemble },
-    { path: '/registry', component: RegistryPageEnsemble },
-    { path: '/review/:id', component: ReviewPageEnsemble }
+    { path: '/', component: MainPageFusion },
+    { path: '/registry', component: RegistryPageFusion },
+    { path: '/review/:id', component: ReviewPageFusion }
   ]
 })
 
 Vue.use(VueRouter)
-
-class VueBus {
-  static install (Vue) {
-    Vue.prototype.$bus = Bus
-  }
-}
-
-Vue.use(VueBus)
 
 new Vue({
   el: '#app',

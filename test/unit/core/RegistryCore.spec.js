@@ -4,13 +4,18 @@ import RegistryCore from '@/core/RegistryCore'
 
 describe('RegistryCore', () => {
   let testable
+  let navigatorStub
+  let busStub
 
-  before(() => {
+  beforeEach(() => {
     testable = new RegistryCore()
-    stub(Navigator, 'goTo')
+    navigatorStub = stub(Navigator, 'goTo')
   })
 
-  after(() => {
+  afterEach(() => {
+    if(navigatorStub) navigatorStub.restore()
+    if(busStub) busStub.restore()
+
     Bus.reset()
   })
 
@@ -32,7 +37,7 @@ describe('RegistryCore', () => {
   })
 
   it('stores the tip', () => {
-    stub(Bus, 'publish')
+    busStub = stub(Bus, 'publish')
     const tip = aTip()
 
     testable.tip = tip
