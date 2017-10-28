@@ -22,8 +22,8 @@ describe('ReviewNucleus', () => {
 
     testable.start()
 
-    expectPublicationMadeOn('tips', 'retrieve.tip')
-    expect(lastDataIn('tips', 'retrieve.tip').id).to.equal('AN_ID')
+    expect(bus).to.have.publishedOn('tips', 'retrieve.tip')
+    expect(bus).to.have.sentInData('id', 'AN_ID')
   })
 
   it('keeps the tip when available', () => {
@@ -45,14 +45,5 @@ describe('ReviewNucleus', () => {
     return {
       name: 'Pub Pob'
     }
-  }
-
-  function expectPublicationMadeOn (channel, topic) {
-    let publications = bus.publicationsIn(channel,topic)
-    expect(publications).not.to.be.empty
-  }
-
-  function lastDataIn (channel, topic) {
-    return bus.lastDataIn(channel, topic)
   }
 })

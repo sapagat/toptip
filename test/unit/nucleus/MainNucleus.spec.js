@@ -20,7 +20,7 @@ describe('MainNucleus', () => {
   it('starts asking for the tips list', () => {
     testable.start()
 
-    expectPublicationMadeOn('tips', 'fetch.list')
+    expect(bus).to.have.publishedOn('tips', 'fetch.list')
   })
 
   it('saves the tips when available', () => {
@@ -46,10 +46,5 @@ describe('MainNucleus', () => {
 
   function aTip () {
     return { foo: 'bar' }
-  }
-
-  function expectPublicationMadeOn (channel, topic) {
-    let publications = bus.publicationsIn(channel,topic)
-    expect(publications).not.to.be.empty
   }
 })

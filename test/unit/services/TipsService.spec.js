@@ -1,4 +1,3 @@
-import { expect } from 'chai'
 import TestBus from '../helpers/TestBus'
 import TipsService from '../../../src/services/TipsService'
 
@@ -14,11 +13,11 @@ describe('Tips Service', () => {
     let tip = aTip()
     bus.publish('tips', 'store.tip', { tip })
 
-
     bus.publish('tips', 'fetch.list')
 
-    expectPublicationMadeOn('tips', 'list.ready')
-    expect(lastDataIn('tips', 'list.ready')[0]).to.include(tip)
+    expect(bus).to.have.publishedOn('tips', 'list.ready')
+    let tipList = bus.lastDataIn('tips', 'list.ready')
+    expect(tipList[0]).to.include(tip)
   })
 
   it('register tips', () => {
@@ -26,19 +25,18 @@ describe('Tips Service', () => {
 
     bus.publish('tips', 'store.tip', { tip })
 
-    expectPublicationMadeOn('tips', 'tip.stored')
+    expect(bus).to.have.publishedOn('tips', 'tip.stored')
   })
 
   it('retrieves tips', () => {
     let tip = aTip()
     bus.publish('tips', 'store.tip', {tip})
-    let storedTip = lastDataIn('tips','tip.stored').tip
+    let storedTip = bus.lastDataIn('tips','tip.stored').tip
 
     bus.publish('tips', 'retrieve.tip', { id: storedTip.id })
 
-    expectPublicationMadeOn('tips', 'tip.ready')
-    let publishedTip = lastDataIn('tips', 'tip.ready').tip
-    expect(storedTip.id).to.equal(publishedTip.id)
+    expect(bus).to.have.publishedOn('tips', 'tip.ready')
+    expect(bus).to.have.sentInData('tip', storedTip)
   })
 
   function aTip () {
@@ -48,14 +46,5 @@ describe('Tips Service', () => {
       message: 'A_MESSAGE',
       advisor: 'AN_ADVISOR'
     }
-  }
-
-  function expectPublicationMadeOn (channel, topic) {
-    let publications = bus.publicationsIn(channel,topic)
-    expect(publications).not.to.be.empty
-  }
-
-  function lastDataIn (channel, topic) {
-    return bus.lastDataIn(channel, topic)
   }
 })

@@ -2,6 +2,7 @@ class TestBus {
   constructor () {
     this.subscriptions = {}
     this.publications = {}
+    this.lastPublication = {}
   }
 
   subscribe (channel, topic, callback) {
@@ -12,6 +13,7 @@ class TestBus {
   }
 
   publish (channel, topic, data) {
+    this.lastPublication = { channel, topic, data }
     this.recordPublication(channel, topic, data)
     this.performPublication(channel, topic, data)
   }

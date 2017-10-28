@@ -40,8 +40,8 @@ describe('RegistryNucleus', () => {
 
     testable.storeTip()
 
-    expectPublicationMadeOn('tips', 'store.tip')
-    expect(lastDataIn('tips', 'store.tip').tip).to.include(tip)
+    expect(bus).to.have.publishedOn('tips','store.tip')
+    expect(bus).to.have.sentInData('tip', tip)
   })
 
   it('redirects to the main page', () => {
@@ -52,15 +52,6 @@ describe('RegistryNucleus', () => {
 
   function aTip () {
     return { name: 'Bar Manolo'}
-  }
-
-  function expectPublicationMadeOn (channel, topic) {
-    let publications = bus.publicationsIn(channel,topic)
-    expect(publications).not.to.be.empty
-  }
-
-  function lastDataIn (channel, topic) {
-    return bus.lastDataIn(channel, topic)
   }
 })
 
