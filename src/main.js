@@ -32,6 +32,5 @@ Vue.use(VueBus)
 new Vue({
   el: '#app',
   router,
-  bus: VueBus,
   template: '<router-view></router-view>'
 })

@@ -1,58 +1,40 @@
 <template>
   <registry-page
     :tip = "tip"
-    :storable = "storable"
-    @storeTip = "storeTip"
-    @goBack = "goToMain"
+    :storable = "core.storable()"
   >
   </registry-page>
 </template>
 
 <script>
 import RegistryPage from '../components/RegistryPage'
+import RegistryCore from '../core/RegistryCore'
 
 export default {
   name: 'registry',
 
   components: { RegistryPage },
 
-  mounted () {
-    this.subscribe()
+  beforeCreate () {
+    this.core = new RegistryCore()
+    this.events = {
+      storeTip: 'storeTip',
+      goBack: 'goToMain'
+    }
+  },
+
+  created () {
+    this.core.subscribe()
   },
 
   data () {
-    return {
-      tip: {}
-    }
+    return this.core.goods()
   },
 
-  computed: {
-    storable () {
-      if (this.isEmpty(this.tip.name)) return false
-      if (this.isEmpty(this.tip.address)) return false
-
-      return true
-    }
-  },
-
-  methods: {
-    subscribe () {
-      this.$bus.subscribe('tips', 'tip.stored', () => {
-        this.goToMain()
-      })
-    },
-
-    storeTip () {
-      this.$bus.publish('tips', 'store.tip', { tip: this.tip })
-    },
-
-    goToMain () {
-      this.$router.push('/')
-    },
-
-    isEmpty (field) {
-      return field === undefined || field === ''
-    }
+  mounted () {
+    Object.entries(this.events).forEach(([event, handler]) => {
+      this.$children[0].$on(event, this.core[handler])
+    })
   }
 }
 </script>
