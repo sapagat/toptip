@@ -16,7 +16,10 @@ class ReviewNucleus extends Nucleus {
 
   subscribe () {
     this.subscribeTo('tips', 'tip.ready', (data) => {
-      this.tip = data.tip
+      this.tip.id = data.tip.id
+    })
+    this.subscribeTo('tips', 'tip.updated', () => {
+      this.goToMain()
     })
   }
 
@@ -25,8 +28,24 @@ class ReviewNucleus extends Nucleus {
     this.publish('tips', 'retrieve.tip', { id: tipId })
   }
 
+  saveable () {
+    return !this.isEmpty(this.tip.reaction)
+  }
+
+  saveReaction () {
+    let payload = {
+      id: this.tip.id,
+      reaction: this.tip.reaction
+    }
+    this.publish('tips', 'save.reaction', payload)
+  }
+
   goToMain () {
     Navigator.goTo('/')
+  }
+
+  isEmpty (field) {
+    return field === undefined || field === ''
   }
 }
 

@@ -1,6 +1,7 @@
 const expect = require('chai').expect
 const MainPage = require('./pages/MainPage')
 const RegistryPage = require('./pages/RegistryPage')
+const ReviewPage = require('./pages/ReviewPage')
 
 describe('A TopTip user', () => {
   let page
@@ -31,6 +32,8 @@ describe('A TopTip user', () => {
   })
 
   context('once she has registered a tip', () => {
+    const reaction = 'It was wondreful'
+
     before(() => {
       goToMainPage()
       clickAddButton()
@@ -39,10 +42,26 @@ describe('A TopTip user', () => {
     })
 
     it('can give her opinion by adding a review', () => {
-      page.firstTip().reviewButton().click()
+      goToReviewATip()
 
-      expectToBeInReviewPage()
+      addReaction()
+
+      expectToBeInMainPage()
+      expectReactionToBeVisible()
     })
+
+    function addReaction () {
+      page.fillReaction(reaction)
+
+      page.saveButton().click()
+
+      page = new MainPage()
+      return page
+    }
+
+    function expectReactionToBeVisible () {
+      expect(page.firstTip().reaction()).to.contain(reaction)
+    }
   })
 
   function goToMainPage () {
@@ -75,6 +94,22 @@ describe('A TopTip user', () => {
     return page
   }
 
+  function goToReviewATip () {
+    page.firstTip().reviewButton().click()
+
+    page = new ReviewPage()
+    return page
+  }
+
+  function addReaction () {
+    page.addReaction(reaction)
+
+    page.saveButton().click()
+
+    page = new MainPage()
+    return page
+  }
+
   function expectTipsToBeListed () {
     expect(page.firstTip().name()).equal('Tramuntana')
     expect(page.firstTip().address()).equal('Beni')
@@ -98,10 +133,5 @@ describe('A TopTip user', () => {
     expect(page.firstTip().address()).equal('Beni')
     expect(page.firstTip().message()).contain('Tienes que probar las papas con mojo illo')
     expect(page.firstTip().advisor()).equal('Morancos')
-  }
-
-  function expectToBeInReviewPage () {
-    expect(browser.element('body').getText()).not.to.contain('Tips')
-    expect(browser.element('body').getText()).to.contain('Add your review')
   }
 })

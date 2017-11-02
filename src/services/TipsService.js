@@ -14,7 +14,12 @@ class TipsService {
       this.store(data.tip)
     })
     this.bus.subscribe('tips', 'retrieve.tip', (data) => {
-      this.find(data.id)
+      this.retrieve(data.id)
+    })
+    this.bus.subscribe('tips', 'save.reaction', (data) => {
+      let tipId = data.id
+      let reaction = data.reaction
+      this.saveReaction(tipId, reaction)
     })
   }
 
@@ -30,11 +35,23 @@ class TipsService {
     this.bus.publish('tips', 'tip.stored', {tip})
   }
 
+  retrieve (id) {
+    let tip = this.find(id)
+    this.bus.publish('tips', 'tip.ready', {tip})
+  }
+
+  saveReaction (id, reaction) {
+    let tip = this.find(id)
+    tip.reaction = reaction
+
+    this.bus.publish('tips', 'tip.updated', { tip })
+  }
+
   find (id) {
     let tip = this.tips.find((stored) => {
       return stored.id === parseInt(id)
     })
-    this.bus.publish('tips', 'tip.ready', {tip})
+    return tip
   }
 
   generateId () {

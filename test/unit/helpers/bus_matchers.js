@@ -4,7 +4,7 @@ function busMatchers (chai, utils) {
   Assertion.addMethod('publishedOn', function (channel, topic) {
     const bus = this._obj
     this.assert(
-      bus.publicationsIn(channel, topic) != [],
+      bus.publicationsIn(channel, topic).length > 0,
       `expected publication on ${channel}, ${topic}`,
       `did not expected publication ${channel}, ${topic}`
     )

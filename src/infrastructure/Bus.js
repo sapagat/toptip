@@ -1,7 +1,7 @@
 import postal from 'postal'
 
 class Bus {
-  static publish (channel, topic, data) {
+  static publish (channel, topic, data = {}) {
     postal.publish({
       channel,
       topic,
@@ -19,6 +19,17 @@ class Bus {
 
   static reset () {
     postal.reset()
+  }
+
+  static debug (channel) {
+    postal.subscribe({
+      channel: channel,
+      topic: '*.*',
+      callback: (data, envelope) => {
+        console.log('Envelope: ', envelope)
+        console.log('Data: ', data)
+      }
+    })
   }
 }
 

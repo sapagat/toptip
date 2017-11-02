@@ -39,6 +39,19 @@ describe('Tips Service', () => {
     expect(bus).to.have.sentInData('tip', storedTip)
   })
 
+  it('registers a reaction to a tip', () => {
+    let tip = aTip()
+    bus.publish('tips', 'store.tip', {tip})
+    let storedTip = bus.lastDataIn('tips','tip.stored').tip
+
+    bus.publish('tips', 'save.reaction', { id: storedTip.id, reaction: 'Lovely'})
+
+    expect(bus).to.have.publishedOn('tips', 'tip.updated')
+    let updatedTip = storedTip
+    updatedTip.reaction = 'Lovely'
+    expect(bus).to.have.sentInData('tip', updatedTip)
+  })
+
   function aTip () {
     return {
       name: 'A_NAME',

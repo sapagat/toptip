@@ -1,5 +1,5 @@
 <template>
-  <review-page></review-page>
+  <review-page :tip="tip" :saveable="nucleus.saveable()"></review-page>
 </template>
 
 <script>
@@ -16,7 +16,8 @@ export default {
   beforeCreate () {
     this.nucleus = new ReviewNucleus(Bus)
     this.events = {
-      goBack: 'goToMain'
+      goBack: 'goToMain',
+      saveReaction: 'saveReaction'
     }
   }
 }

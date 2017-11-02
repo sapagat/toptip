@@ -60,6 +60,13 @@ class Tip {
     return advisor.getText()
   }
 
+  reaction () {
+    let reaction = this.element.$('.TipCard-footer')
+    assert.isTrue(reaction.isExisting())
+
+    return reaction.getText()
+  }
+
   reviewButton () {
     let button = this.element.$('.TipCard-reviewButton')
     assert.isTrue(button.isExisting(), 'Review button')

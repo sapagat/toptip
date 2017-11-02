@@ -12,7 +12,7 @@ class TestBus {
    this.subscriptions[channel][topic].push(callback)
   }
 
-  publish (channel, topic, data) {
+  publish (channel, topic, data = {}) {
     this.lastPublication = { channel, topic, data }
     this.recordPublication(channel, topic, data)
     this.performPublication(channel, topic, data)

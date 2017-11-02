@@ -1,14 +1,20 @@
 <template>
   <div class="TipCard">
-    <div @click="review" class="TipCard-reviewButton">
-      <i class="fa fa-pencil-square-o"></i>
+    <div class="TipCard-content">
+      <div @click="review" class="TipCard-reviewButton">
+        <i class="fa fa-pencil-square-o"></i>
+      </div>
+      <span class="TipCard-header">{{tip.name }}</span>
+      <span class="TipCard-address">{{tip.address}}</span>
+      <div class="TipCard-advise">
+        <p>{{advise}}</p>
+      </div>
+      <span class="TipCard-advisor">{{tip.advisor}}</span>
     </div>
-    <span class="TipCard-header">{{tip.name }}</span>
-    <span class="TipCard-address">{{tip.address}}</span>
-    <div class="TipCard-advise">
-      <p>{{quotedMessage}}</p>
+
+    <div v-if="tip.reaction" class="TipCard-footer">
+      <span>{{reaction}}</span>
     </div>
-    <span class="TipCard-advisor">{{tip.advisor}}</span>
   </div>
 </template>
 
@@ -18,16 +24,24 @@ export default {
   props: ['tip'],
 
   computed: {
-    quotedMessage () {
-      if (!this.tip.message) return
+    advise () {
+      return this.quote(this.tip.message)
+    },
 
-      return `"${this.tip.message}"`
+    reaction () {
+      return this.quote(this.tip.reaction)
     }
   },
 
   methods: {
     review () {
       this.$emit('review', {id: this.tip.id})
+    },
+
+    quote (message) {
+      if (!message) return
+
+      return `"${message}"`
     }
   }
 }
@@ -36,9 +50,19 @@ export default {
 <style>
 .TipCard {
   margin: .875em .5em;
-  padding: 1em;
 
   box-shadow: 0 1px 3px 0 #d4d4d5;
+  border-top: 1px solid rgba(34,36,38,.1);
+}
+
+.TipCard-content {
+  padding: 1em;
+  margin-bottom: 30px;
+}
+
+.TipCard-footer {
+  padding: 1em;
+
   border-top: 1px solid rgba(34,36,38,.1);
 }
 

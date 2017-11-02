@@ -13,7 +13,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .Form {
   padding: 1em 1em;
   display: flex;
