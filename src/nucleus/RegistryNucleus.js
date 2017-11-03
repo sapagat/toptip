@@ -1,4 +1,3 @@
-import Navigator from '../infrastructure/Navigator'
 import Nucleus from './Nucleus'
 
 class RegistryNucleus extends Nucleus {
@@ -32,7 +31,7 @@ class RegistryNucleus extends Nucleus {
   }
 
   goToMain () {
-    Navigator.goTo('/')
+    this.publish('router', 'go.main')
   }
 
   isEmpty (field) {

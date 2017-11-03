@@ -1,26 +1,25 @@
 import ReviewNucleus from '@/nucleus/ReviewNucleus'
-import Navigator from '@/infrastructure/Navigator'
 import TestBus from '../helpers/TestBus'
 
 describe('ReviewNucleus', () => {
-  let navigatorStub
   let testable
   let bus
 
   beforeEach(() => {
     bus = new TestBus()
     testable = new ReviewNucleus(bus)
-    navigatorStub = stub(Navigator, 'goTo')
   })
 
-  afterEach(() => {
-    if(navigatorStub) navigatorStub.restore()
-  })
-
-  it('starts by asking for the tip to review', () => {
-    location.hash = '/review/AN_ID'
-
+  it('starts by asking the current location', () => {
     testable.start()
+
+    expect(bus).to.have.publishedOn('router', 'provide.details')
+  })
+
+  it('ask for the tip to review once the route id is ready', () => {
+    testable.subscribe()
+
+    bus.publish('router', 'details.ready', { id: 'AN_ID' })
 
     expect(bus).to.have.publishedOn('tips', 'retrieve.tip')
     expect(bus).to.have.sentInData('id', 'AN_ID')
@@ -35,10 +34,10 @@ describe('ReviewNucleus', () => {
     expect(testable.tip.id).to.equal(tip.id)
   })
 
-  it('redirects to main page', () => {
+  it('asks to go to the main page', () => {
     testable.goToMain()
 
-    expect(Navigator.goTo).to.have.been.calledWith('/')
+    expect(bus).to.have.publishedOn('router', 'go.main')
   })
 
   it('saves the reaction of a tip', () => {
@@ -55,12 +54,12 @@ describe('ReviewNucleus', () => {
     expect(bus).to.have.sentInData('reaction', testTip.reaction)
   })
 
-  it('redirects to main page once tip is updated', () => {
+  it('asks to go to the main page once the tip is updated', () => {
     testable.subscribe()
 
     bus.publish('tips', 'tip.updated')
 
-    expect(Navigator.goTo).to.have.been.calledWith('/')
+    expect(bus).to.have.publishedOn('router', 'go.main')
   })
 
   it('says when a reaction is saveable', () => {

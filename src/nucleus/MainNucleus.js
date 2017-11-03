@@ -1,4 +1,3 @@
-import Navigator from '../infrastructure/Navigator'
 import Nucleus from './Nucleus'
 
 class MainNucleus extends Nucleus {
@@ -25,11 +24,11 @@ class MainNucleus extends Nucleus {
   }
 
   goToRegistry () {
-    Navigator.goTo('/registry')
+    this.publish('router', 'go.registry')
   }
 
   goToReview (data) {
-    Navigator.goTo('/review/' + data.id)
+    this.publish('router', 'go.review', { id: data.id })
   }
 
   keepList (target, source) {

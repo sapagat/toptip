@@ -1,4 +1,3 @@
-import Navigator from '../infrastructure/Navigator'
 import Nucleus from './Nucleus'
 
 class ReviewNucleus extends Nucleus {
@@ -15,6 +14,9 @@ class ReviewNucleus extends Nucleus {
   }
 
   subscribe () {
+    this.subscribeTo('router', 'details.ready', (data) => {
+      this.askForTip(data.id)
+    })
     this.subscribeTo('tips', 'tip.ready', (data) => {
       this.keepData(this.tip, data.tip)
     })
@@ -24,7 +26,10 @@ class ReviewNucleus extends Nucleus {
   }
 
   start () {
-    let tipId = Navigator.id()
+    this.publish('router', 'provide.details')
+  }
+
+  askForTip (tipId) {
     this.publish('tips', 'retrieve.tip', { id: tipId })
   }
 
@@ -41,7 +46,7 @@ class ReviewNucleus extends Nucleus {
   }
 
   goToMain () {
-    Navigator.goTo('/')
+    this.publish('router', 'go.main')
   }
 
   keepData (target, source) {

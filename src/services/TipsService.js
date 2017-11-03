@@ -1,22 +1,23 @@
-class TipsService {
-  constructor (bus) {
-    this.bus = bus
-    this.tips = []
+import Service from './Service'
 
-    this.subscribe()
+class TipsService extends Service {
+  constructor (bus) {
+    super(bus)
+
+    this.tips = []
   }
 
   subscribe () {
-    this.bus.subscribe('tips', 'fetch.list', () => {
+    this.subscribeTo('tips', 'fetch.list', () => {
       this.provideList()
     })
-    this.bus.subscribe('tips', 'store.tip', (data) => {
+    this.subscribeTo('tips', 'store.tip', (data) => {
       this.store(data.tip)
     })
-    this.bus.subscribe('tips', 'retrieve.tip', (data) => {
+    this.subscribeTo('tips', 'retrieve.tip', (data) => {
       this.retrieve(data.id)
     })
-    this.bus.subscribe('tips', 'save.reaction', (data) => {
+    this.subscribeTo('tips', 'save.reaction', (data) => {
       let tipId = data.id
       let reaction = data.reaction
       this.saveReaction(tipId, reaction)
@@ -24,7 +25,7 @@ class TipsService {
   }
 
   provideList () {
-    this.bus.publish('tips', 'list.ready', this.tips)
+    this.publish('tips', 'list.ready', this.tips)
   }
 
   store (tip) {
@@ -32,19 +33,19 @@ class TipsService {
 
     this.tips.push(tip)
 
-    this.bus.publish('tips', 'tip.stored', {tip})
+    this.publish('tips', 'tip.stored', {tip})
   }
 
   retrieve (id) {
     let tip = this.find(id)
-    this.bus.publish('tips', 'tip.ready', {tip})
+    this.publish('tips', 'tip.ready', {tip})
   }
 
   saveReaction (id, reaction) {
     let tip = this.find(id)
     tip.reaction = reaction
 
-    this.bus.publish('tips', 'tip.updated', { tip })
+    this.publish('tips', 'tip.updated', { tip })
   }
 
   find (id) {
