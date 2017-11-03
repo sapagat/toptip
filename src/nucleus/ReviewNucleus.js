@@ -16,7 +16,7 @@ class ReviewNucleus extends Nucleus {
 
   subscribe () {
     this.subscribeTo('tips', 'tip.ready', (data) => {
-      this.tip.id = data.tip.id
+      this.keepData(this.tip, data.tip)
     })
     this.subscribeTo('tips', 'tip.updated', () => {
       this.goToMain()
@@ -42,6 +42,10 @@ class ReviewNucleus extends Nucleus {
 
   goToMain () {
     Navigator.goTo('/')
+  }
+
+  keepData (target, source) {
+    Object.assign(target, source)
   }
 
   isEmpty (field) {

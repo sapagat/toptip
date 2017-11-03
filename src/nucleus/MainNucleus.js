@@ -16,7 +16,7 @@ class MainNucleus extends Nucleus {
 
   subscribe () {
     this.subscribeTo('tips', 'list.ready', (tips) => {
-      tips.forEach((tip) => { this.tips.push(tip) })
+      this.keepList(this.tips, tips)
     })
   }
 
@@ -30,6 +30,10 @@ class MainNucleus extends Nucleus {
 
   goToReview (data) {
     Navigator.goTo('/review/' + data.id)
+  }
+
+  keepList (target, source) {
+    source.forEach((element) => { target.push(element) })
   }
 }
 
