@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import PageLayout from '../layout/PageLayout'
+import PageLayout from '../layout/Page'
 import TipForm from '../components/TipForm'
 
 export default {

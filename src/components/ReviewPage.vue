@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import PageLayout from '../layout/PageLayout'
+import PageLayout from '../layout/Page'
 
 export default {
   name: 'review-page',

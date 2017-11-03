@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import PageLayout from '../layout/PageLayout'
+import PageLayout from '../layout/Page'
 import TipList from './TipList'
 import AddButton from './AddButton'
 
