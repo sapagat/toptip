@@ -14,3 +14,5 @@ const sinon = require('sinon')
 global.stub = sinon.stub
 
 require('jsdom-global')()
+const mockLocalStorage = require('mock-local-storage')
+global.localStorage = mockLocalStorage

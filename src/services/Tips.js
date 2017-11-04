@@ -1,10 +1,11 @@
 import Service from './Service'
+import Collection from './Tips/Collection'
 
-class TipsService extends Service {
+class Tips extends Service {
   constructor (bus) {
     super(bus)
 
-    this.tips = []
+    this.collection = new Collection()
   }
 
   subscribe () {
@@ -25,40 +26,33 @@ class TipsService extends Service {
   }
 
   provideList () {
-    this.publish('tips', 'list.ready', this.tips)
+    this.publish('tips', 'list.ready', this.collection.all())
   }
 
   store (tip) {
     tip['id'] = this.generateId()
 
-    this.tips.push(tip)
+    this.collection.store(tip)
 
     this.publish('tips', 'tip.stored', {tip})
   }
 
   retrieve (id) {
-    let tip = this.find(id)
+    let tip = this.collection.find(id)
     this.publish('tips', 'tip.ready', {tip})
   }
 
   saveReaction (id, reaction) {
-    let tip = this.find(id)
+    let tip = this.collection.find(id)
     tip.reaction = reaction
+    this.collection.store(tip)
 
     this.publish('tips', 'tip.updated', { tip })
   }
 
-  find (id) {
-    let tip = this.tips.find((stored) => {
-      return stored.id === parseInt(id)
-    })
-    return tip
-  }
-
   generateId () {
-    let incremenetalId = this.tips.length + 1
-    return incremenetalId
+    return Date.now()
   }
 }
 
-export default TipsService
+export default Tips

@@ -1,5 +1,5 @@
 import TestBus from '../helpers/TestBus'
-import RouterService from '../../../src/services/RouterService'
+import RouterService from '../../../src/services/Router'
 import Navigator from '@/infrastructure/Navigator'
 
 describe ('Router Service', () => {
@@ -35,11 +35,11 @@ describe ('Router Service', () => {
   })
 
   it('provides information about the current route', () => {
-    location.hash = '/review/AN_ID'
+    location.hash = '/review/123456789'
 
     bus.publish('router', 'provide.details')
 
     expect(bus).to.have.publishedOn('router', 'details.ready')
-    expect(bus).to.have.sentInData('id', 'AN_ID')
+    expect(bus).to.have.sentInData('id', 123456789)
   })
 })

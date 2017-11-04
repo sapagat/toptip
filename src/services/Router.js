@@ -1,7 +1,7 @@
 import Navigator from '../infrastructure/Navigator'
 import Service from './Service'
 
-class RouterService extends Service {
+class Router extends Service {
   subscribe () {
     this.subscribeTo('router', 'go.registry', () => {
       Navigator.goTo('/registry')
@@ -22,4 +22,4 @@ class RouterService extends Service {
   }
 }
 
-export default RouterService
+export default Router

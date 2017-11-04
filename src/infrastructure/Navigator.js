@@ -1,6 +1,6 @@
 class Navigator {
   static id () {
-    return location.hash.split('/')[2]
+    return parseInt(location.hash.split('/')[2])
   }
 
   static goTo (path) {

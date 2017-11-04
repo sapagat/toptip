@@ -1,5 +1,5 @@
 import TestBus from '../helpers/TestBus'
-import TipsService from '../../../src/services/TipsService'
+import TipsService from '../../../src/services/Tips'
 
 describe('Tips Service', () => {
   let bus

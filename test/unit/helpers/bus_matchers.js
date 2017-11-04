@@ -12,12 +12,22 @@ function busMatchers (chai, utils) {
 
   Assertion.addMethod('sentInData',  function (key, value) {
     const bus = this._obj
+    const sent = bus.lastPublication.data[key]
     this.assert(
-      bus.lastPublication.data[key] === value,
+      equalMessage(value, sent),
       `expected ${value} to be sent as ${key} on last publication`,
       `expected ${value} not to be sent as ${key} on last publication`
     )
   })
+
+  function equalMessage (expected, sent) {
+    let same = true
+    Object.keys(expected).forEach(function(key) {
+      if(expected[key] != sent[key])
+        same = false
+    })
+    return same
+  }
 }
 
 module.exports = busMatchers
