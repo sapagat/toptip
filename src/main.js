@@ -4,13 +4,15 @@ import MainPageFusion from './fusion/MainPage.vue'
 import RegistryPageFusion from './fusion/RegistryPage.vue'
 import ReviewPageFusion from './fusion/ReviewPage.vue'
 import TipsService from './services/Tips'
+import TipsCollection from './services/Tips/Collection'
 import RouterService from './services/Router'
 import Bus from './infrastructure/Bus'
 
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */
-new TipsService(Bus)
+const collection = new TipsCollection()
+new TipsService(Bus, collection)
 new RouterService(Bus)
 
 const router = new VueRouter({

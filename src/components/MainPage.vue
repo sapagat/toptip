@@ -12,6 +12,7 @@
       <tip-menu
         v-if="menuOpen"
         :tipId="menuTipId"
+        @deleteTip="deleteTip"
         @goToReview="goToReview"
         @close="closeMenu"
       >
@@ -44,6 +45,12 @@ export default {
     }
   },
 
+  watch: {
+    tips (value) {
+      this.closeMenu()
+    }
+  },
+
   methods: {
     goToRegistry () {
       this.$emit('goToRegistry')
@@ -60,6 +67,10 @@ export default {
 
     goToReview (event) {
       this.$emit('goToReview', event)
+    },
+
+    deleteTip (event) {
+      this.$emit('deleteTip', event)
     }
   }
 }

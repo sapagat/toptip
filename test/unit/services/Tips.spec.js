@@ -1,12 +1,15 @@
 import TestBus from '../helpers/TestBus'
 import TipsService from '../../../src/services/Tips'
+import Collection from '../../../src/services/Tips/Collection'
 
 describe('Tips Service', () => {
   let bus
+  let collection
 
   beforeEach(() => {
     bus = new TestBus()
-    new TipsService(bus)
+    collection = new Collection()
+    new TipsService(bus, collection)
   })
 
   it('provides the list of registered tips', () => {
@@ -50,6 +53,16 @@ describe('Tips Service', () => {
     let updatedTip = storedTip
     updatedTip.reaction = 'Lovely'
     expect(bus).to.have.sentInData('tip', updatedTip)
+  })
+
+  it('removes tips', () => {
+    let tip = aTip()
+    bus.publish('tips', 'store.tip', {tip})
+    let storedTip = bus.lastDataIn('tips','tip.stored').tip
+
+    bus.publish('tips', 'delete.tip', { id: storedTip.id })
+
+    expect(bus).to.have.publishedOn('tips', 'tip.deleted')
   })
 
   function aTip () {

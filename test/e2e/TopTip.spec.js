@@ -6,6 +6,10 @@ const ReviewPage = require('./pages/ReviewPage')
 describe('A TopTip user', () => {
   let page
 
+  afterEach(() => {
+    browser.localStorage('DELETE')
+  })
+
   it('can keep tips in a list', () => {
     goToMainPage()
 
@@ -34,7 +38,7 @@ describe('A TopTip user', () => {
   context('once she has registered a tip', () => {
     const reaction = 'It was wondreful'
 
-    before(() => {
+    beforeEach(() => {
       goToMainPage()
       clickAddButton()
       enterTipDetails()
@@ -48,6 +52,14 @@ describe('A TopTip user', () => {
 
       expectToBeInMainPage()
       expectReactionToBeVisible()
+    })
+
+    it('can delete it', () => {
+      page.firstTip().displayMenu()
+
+      page.tipMenu().choose('Delete')
+
+      expectTipNotToBeListed()
     })
 
     function addReaction () {
@@ -135,5 +147,9 @@ describe('A TopTip user', () => {
     expect(page.firstTip().address()).equal('Beni')
     expect(page.firstTip().message()).contain('Tienes que probar las papas con mojo illo')
     expect(page.firstTip().advisor()).equal('Morancos')
+  }
+
+  function expectTipNotToBeListed () {
+    expect(browser.element('.TipCard').isExisting()).to.equal(false)
   }
 })

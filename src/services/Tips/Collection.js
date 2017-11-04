@@ -15,10 +15,16 @@ class Collection {
   }
 
   exists (id) {
-    return this.find(id)
+    let collection = this.read()
+    let stored = collection.find((tip) => {
+      return tip.id === id
+    })
+    return stored !== undefined
   }
 
   find (id) {
+    if (!this.exists(id)) throw new Error('Tip not found')
+
     let collection = this.read()
     let tip = collection.find((tip) => {
       return tip.id === id
@@ -42,6 +48,16 @@ class Collection {
       if (storedTip.id !== updatedTip.id) return
 
       Object.assign(storedTip, updatedTip)
+    })
+    this.write(collection)
+  }
+
+  delete (id) {
+    let collection = this.read()
+    collection.forEach((storedTip, position) => {
+      if (storedTip.id !== id) return
+
+      collection.splice(position, 1)
     })
     this.write(collection)
   }

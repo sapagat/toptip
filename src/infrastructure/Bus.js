@@ -10,11 +10,15 @@ class Bus {
   }
 
   static subscribe (channel, topic, callback) {
-    postal.subscribe({
+    return postal.subscribe({
       channel,
       topic,
       callback
     })
+  }
+
+  static unsubscribe (subscription) {
+    postal.unsubscribe(subscription)
   }
 
   static reset () {

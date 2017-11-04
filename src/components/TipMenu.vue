@@ -3,6 +3,7 @@
     <div class="modal-background Modal-background" @click="close"></div>
     <div class="modal-content Menu">
       <div class="Menu-item" @click="goToReview">Review</div>
+      <div class="Menu-item" @click="deleteTip">Delete</div>
       <div class="Menu-item" @click="close">Cancel</div>
     </div>
   </div>
@@ -21,6 +22,10 @@ export default {
 
     goToReview () {
       this.$emit('goToReview', {id: this.tipId})
+    },
+
+    deleteTip () {
+      this.$emit('deleteTip', this.tipId)
     }
   }
 }

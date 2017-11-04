@@ -17,9 +17,16 @@ class MainNucleus extends Nucleus {
     this.subscribeTo('tips', 'list.ready', (tips) => {
       this.keepList(this.tips, tips)
     })
+    this.subscribeTo('tips', 'tip.deleted', () => {
+      this.askForList()
+    })
   }
 
   start () {
+    this.askForList()
+  }
+
+  askForList () {
     this.publish('tips', 'fetch.list')
   }
 
@@ -32,7 +39,13 @@ class MainNucleus extends Nucleus {
   }
 
   keepList (target, source) {
+    target.splice(0, target.length)
+
     source.forEach((element) => { target.push(element) })
+  }
+
+  delete (id) {
+    this.publish('tips', 'delete.tip', {id})
   }
 }
 

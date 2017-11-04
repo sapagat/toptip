@@ -15,6 +15,10 @@ const fusion = {
     })
   },
 
+  beforeDestroy () {
+    this.nucleus.unsubscribe()
+  },
+
   methods: {
     onlySon () {
       return this.$children[0]

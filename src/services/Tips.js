@@ -1,11 +1,10 @@
 import Service from './Service'
-import Collection from './Tips/Collection'
 
 class Tips extends Service {
-  constructor (bus) {
+  constructor (bus, collection) {
     super(bus)
 
-    this.collection = new Collection()
+    this.collection = collection
   }
 
   subscribe () {
@@ -22,6 +21,10 @@ class Tips extends Service {
       let tipId = data.id
       let reaction = data.reaction
       this.saveReaction(tipId, reaction)
+    })
+    this.subscribeTo('tips', 'delete.tip', (data) => {
+      let tipId = data.id
+      this.delete(tipId)
     })
   }
 
@@ -48,6 +51,12 @@ class Tips extends Service {
     this.collection.store(tip)
 
     this.publish('tips', 'tip.updated', { tip })
+  }
+
+  delete (id) {
+    this.collection.delete(id)
+
+    this.publish('tips', 'tip.deleted')
   }
 
   generateId () {

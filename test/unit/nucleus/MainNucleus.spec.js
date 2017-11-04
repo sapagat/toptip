@@ -38,6 +38,23 @@ describe('MainNucleus', () => {
     expect(bus).to.have.sentInData('id', 'AN_ID')
   })
 
+  it('ask for a tip deletion', () => {
+    let id = 1123123
+
+    testable.delete(id)
+
+    expect(bus).to.have.publishedOn('tips', 'delete.tip')
+    expect(bus).to.have.sentInData('id', id)
+  })
+
+  it('once a tip is deleted it refreshes the list', () => {
+    testable.subscribe()
+
+    bus.publish('tips', 'tip.deleted')
+
+    expect(bus).to.have.publishedOn('tips', 'fetch.list')
+  })
+
   function aTip () {
     return { foo: 'bar' }
   }

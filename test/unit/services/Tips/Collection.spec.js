@@ -52,4 +52,16 @@ describe ('Tips Collection', () => {
 
     expect(collection.find(1).name).to.equal('Another name')
   })
+
+  it('can remove a tip', () => {
+    collection.store({id: 1, name: 'A bar'})
+
+    collection.delete(1)
+
+    try {
+      collection.find(1)
+    }catch (e) {
+      expect(e.message).to.equal('Tip not found')
+    }
+  })
 })

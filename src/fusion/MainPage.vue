@@ -20,7 +20,8 @@ export default {
     this.nucleus = new MainNucleus(Bus)
     this.events = {
       goToRegistry: 'goToRegistry',
-      goToReview: 'goToReview'
+      goToReview: 'goToReview',
+      deleteTip: 'delete'
     }
   }
 }
