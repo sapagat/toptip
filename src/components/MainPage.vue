@@ -7,8 +7,15 @@
     </template>
 
     <template slot="content">
-      <tip-list :tips="tips" @review="goToReview"></tip-list>
+      <tip-list :tips="tips" @openMenu="openMenu"></tip-list>
       <add-button :onClick="goToRegistry"></add-button>
+      <tip-menu
+        v-if="menuOpen"
+        :tipId="menuTipId"
+        @goToReview="goToReview"
+        @close="closeMenu"
+      >
+      </tip-menu>
     </template>
   </page-layout>
 </template>
@@ -17,6 +24,7 @@
 import PageLayout from '../layout/Page'
 import TipList from './TipList'
 import AddButton from './AddButton'
+import TipMenu from './TipMenu'
 
 export default {
   name: 'main-page',
@@ -25,12 +33,29 @@ export default {
   components: {
     PageLayout,
     TipList,
-    AddButton
+    AddButton,
+    TipMenu
+  },
+
+  data () {
+    return {
+      tipId: undefined,
+      menuOpen: false
+    }
   },
 
   methods: {
     goToRegistry () {
       this.$emit('goToRegistry')
+    },
+
+    openMenu (event) {
+      this.menuTipId = event.id
+      this.menuOpen = true
+    },
+
+    closeMenu () {
+      this.menuOpen = false
     },
 
     goToReview (event) {

@@ -1,8 +1,8 @@
 <template>
   <div class="TipCard">
     <div class="TipCard-content">
-      <div @click="review" class="TipCard-reviewButton">
-        <i class="fa fa-pencil-square-o"></i>
+      <div @click="openMenu" class="TipCard-menuButton">
+        <i class="fa fa-chevron-down"></i>
       </div>
       <span class="TipCard-header">{{tip.name }}</span>
       <span class="TipCard-address">{{tip.address}}</span>
@@ -34,8 +34,8 @@ export default {
   },
 
   methods: {
-    review () {
-      this.$emit('review', {id: this.tip.id})
+    openMenu () {
+      this.$emit('openMenu', {id: this.tip.id})
     },
 
     quote (message) {
@@ -66,7 +66,7 @@ export default {
   border-top: 1px solid rgba(34,36,38,.1);
 }
 
-.TipCard-reviewButton {
+.TipCard-menuButton {
   float: right;
 }
 

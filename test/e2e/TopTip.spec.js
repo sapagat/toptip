@@ -95,7 +95,9 @@ describe('A TopTip user', () => {
   }
 
   function goToReviewATip () {
-    page.firstTip().reviewButton().click()
+    page.firstTip().displayMenu()
+
+    page.tipMenu().choose('Review')
 
     page = new ReviewPage()
     return page

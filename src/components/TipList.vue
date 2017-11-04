@@ -4,7 +4,7 @@
       v-for="tip in tips"
       :key="tip.name"
       :tip="tip"
-      @review="notifyReview"
+      @openMenu="openMenu"
       >
     </tip-card>
   </div>
@@ -21,8 +21,8 @@ export default {
   components: { TipCard },
 
   methods: {
-    notifyReview (event) {
-      this.$emit('review', event)
+    openMenu (event) {
+      this.$emit('openMenu', event)
     }
   }
 }

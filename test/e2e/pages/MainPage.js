@@ -14,11 +14,18 @@ class MainPage {
 
     assert.isTrue(element.isExisting())
 
-    return new Tip(element)
+    return new TipCard(element)
   }
 
   addButton() {
     return $('#add_tip')
+  }
+
+  tipMenu () {
+    let element = $('.Menu')
+    assert.isTrue(element.isExisting(), 'Tip Menu')
+
+    return new TipMenu(element)
   }
 
   validate () {
@@ -27,7 +34,7 @@ class MainPage {
   }
 }
 
-class Tip {
+class TipCard {
   constructor (element){
     this.element = element
   }
@@ -67,11 +74,21 @@ class Tip {
     return reaction.getText()
   }
 
-  reviewButton () {
-    let button = this.element.$('.TipCard-reviewButton')
-    assert.isTrue(button.isExisting(), 'Review button')
+  displayMenu () {
+    let button = this.element.$('.TipCard-menuButton')
+    assert.isTrue(button.isExisting(), 'Menu button')
 
-    return button
+    button.click()
+  }
+}
+
+class TipMenu {
+  constructor (element){
+    this.element = element
+  }
+
+  choose (option) {
+    this.element.click(`.Menu-item*=${option}`)
   }
 }
 
