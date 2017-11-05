@@ -40,14 +40,8 @@ export default {
 
   data () {
     return {
-      tipId: undefined,
+      menuTipId: undefined,
       menuOpen: false
-    }
-  },
-
-  watch: {
-    tips (value) {
-      this.closeMenu()
     }
   },
 
@@ -70,6 +64,7 @@ export default {
     },
 
     deleteTip (event) {
+      this.closeMenu()
       this.$emit('deleteTip', event)
     }
   }
