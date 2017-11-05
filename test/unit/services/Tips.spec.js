@@ -12,57 +12,97 @@ describe('Tips Service', () => {
     new TipsService(bus, collection)
   })
 
-  it('provides the list of registered tips', () => {
-    let tip = aTip()
-    bus.publish('tips', 'store.tip', { tip })
-
-    bus.publish('tips', 'fetch.list')
-
-    expect(bus).to.have.publishedOn('tips', 'list.ready')
-    let tipList = bus.lastDataIn('tips', 'list.ready')
-    expect(tipList[0]).to.include(tip)
+  afterEach(() => {
+    window.localStorage.clear()
   })
 
-  it('register tips', () => {
-    let tip = aTip()
+  describe('fetch.list', () => {
+    it('publishes the list on list.ready', () => {
+      let tip = aTip()
+      collection.store(tip)
 
-    bus.publish('tips', 'store.tip', { tip })
+      bus.publish('tips', 'fetch.list')
 
-    expect(bus).to.have.publishedOn('tips', 'tip.stored')
+      expect(bus).to.have.publishedOn('tips', 'list.ready')
+      let tipList = bus.lastDataIn('tips', 'list.ready')
+      expect(tipList[0]).to.include(tip)
+    })
   })
 
-  it('retrieves tips', () => {
-    let tip = aTip()
-    bus.publish('tips', 'store.tip', {tip})
-    let storedTip = bus.lastDataIn('tips','tip.stored').tip
+  describe('store.tip', () => {
+    it('register tips', () => {
+      let tip = aTip()
 
-    bus.publish('tips', 'retrieve.tip', { id: storedTip.id })
+      bus.publish('tips', 'store.tip', { tip })
 
-    expect(bus).to.have.publishedOn('tips', 'tip.ready')
-    expect(bus).to.have.sentInData('tip', storedTip)
+      let stored = collection.find(tip.id)
+      expect(stored.name).to.equal(tip.name)
+    })
+
+    it('publshes tip.stored', () => {
+      let tip = aTip()
+
+      bus.publish('tips', 'store.tip', { tip })
+
+      expect(bus).to.have.publishedOn('tips', 'tip.stored')
+    })
   })
 
-  it('registers a reaction to a tip', () => {
-    let tip = aTip()
-    bus.publish('tips', 'store.tip', {tip})
-    let storedTip = bus.lastDataIn('tips','tip.stored').tip
+  describe('retrieve.tip', () => {
+    it('publishes the tip on tip.ready', () => {
+      let tip = aTip()
+      collection.store(tip)
 
-    bus.publish('tips', 'save.reaction', { id: storedTip.id, reaction: 'Lovely'})
+      bus.publish('tips', 'retrieve.tip', { id: tip.id })
 
-    expect(bus).to.have.publishedOn('tips', 'tip.updated')
-    let updatedTip = storedTip
-    updatedTip.reaction = 'Lovely'
-    expect(bus).to.have.sentInData('tip', updatedTip)
+      expect(bus).to.have.publishedOn('tips', 'tip.ready')
+      expect(bus).to.have.sentInData('tip', tip)
+    })
   })
 
-  it('removes tips', () => {
-    let tip = aTip()
-    bus.publish('tips', 'store.tip', {tip})
-    let storedTip = bus.lastDataIn('tips','tip.stored').tip
+  describe('save.reaction', () => {
+    it('registers the reaction to a tip', () => {
+      let tip = aTip()
+      let reaction = 'Lovely'
+      collection.store(tip)
 
-    bus.publish('tips', 'delete.tip', { id: storedTip.id })
+      bus.publish('tips', 'save.reaction', { id: tip.id, reaction: reaction})
 
-    expect(bus).to.have.publishedOn('tips', 'tip.deleted')
+      expect(collection.find(tip.id).reaction).to.equal(reaction)
+    })
+
+    it('publishes the updated tip on tip.updated', () => {
+      let tip = aTip()
+      let reaction = 'Lovely'
+      collection.store(tip)
+
+      bus.publish('tips', 'save.reaction', { id: tip.id, reaction: reaction})
+
+      expect(bus).to.have.publishedOn('tips', 'tip.updated')
+      let publishedTip = bus.lastPublication.data.tip
+      expect(publishedTip.id).to.equal(tip.id)
+      expect(publishedTip.reaction).to.equal(reaction)
+    })
+  })
+
+  describe('delete.tip', () => {
+    it('removes the tip', () => {
+      let tip = aTip()
+      collection.store(tip)
+
+      bus.publish('tips', 'delete.tip', { id: tip.id })
+
+      expect(collection.exists(tip.id)).to.equal(false)
+    })
+
+    it('publishes on tip.deleted', () => {
+      let tip = aTip()
+      collection.store(tip)
+
+      bus.publish('tips', 'delete.tip', { id: tip.id })
+
+      expect(bus).to.have.publishedOn('tips', 'tip.deleted')
+    })
   })
 
   function aTip () {
