@@ -10,6 +10,7 @@
     "build": "node build/build.js",
     "unit": "mocha-webpack --opts test/unit/mocha-webpack.opts",
     "e2e": "node test/e2e/runner.js",
+    "e2e-speed": "node ./node_modules/.bin/wdio",
     "test": "npm run unit && npm run e2e",
     "lint": "eslint --ext .js,.vue src",
     "postinstall": "selenium-standalone install"

@@ -25,6 +25,9 @@ npm run unit
 # run e2e tests
 npm run e2e
 
+# run e2e assuming that the server is running at localhost:8080
+npm run e2e-speed
+
 # run all tests
 npm test
 ```
